@@ -1,0 +1,48 @@
+body {
+    background-color: #272727;
+}
+.jumbotron-fluid.hero-area {
+    background-size: cover !important;
+    background-position-y: 30% !important;
+    justify-content: center;
+    height: 600px;
+}
+.featured-badge {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+}
+
+.featured-badge span {
+    background-color: #f44336;
+}
+
+.jumbotron-fluid {
+    margin-bottom: 0px;
+    height: 100%;
+}
+
+#featured-carousel .card {
+    height: 100%;
+    width: 100%;
+}
+.back-btn {
+    position: absolute;
+    top: 5px;
+    righT: 5px;
+}
+
+a.listing-actions {
+    /* color: #000; */
+}
+
+.listing-badge-genre {
+position: absolute;
+top: 5px;
+left: 20px;
+}
+.listing-badge-rating {
+    position: absolute;
+    bottom: 18px;
+    right: 20px;
+}

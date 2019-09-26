@@ -1,0 +1,381 @@
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+      <meta charset="utf-8">
+      <meta name="description" content="Free For All">
+      <!-- Bootstrap Required Meta -->
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>Free For All</title>
+
+      <!-- SCRIPTS FOR STYLING -->
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+      </script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+          integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+      </script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+      </script>
+      <!-- Bootstrap CDN -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+      <link rel="stylesheet" href="{{url_for('static', filename='styles/style.css')}}">
+      <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+      <script src="https://kit.fontawesome.com/94bed8af75.js"></script>
+  </head>
+  <!-- ---colour theming--- -->
+  <!-- https://material-ui.com/customization/color/ -->
+
+  <body>
+      <!-- NAV -->
+      <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
+              aria-controls="navbar-toggle" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbar">
+              <!-- <a class="navbar-brand" href="#">FFA</a> -->
+              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                  <li class="nav-item active">
+                      <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                  </li>
+                  <!-- <li class="nav-item">
+                      <a class="nav-link" href="#">Nav-Item</a>
+                  </li> -->
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                          aria-haspopup="true" aria-expanded="false">Genres</a>
+                      <div class="dropdown-menu">
+                          <a class="dropdown-item" href="listings-full.html">Action</a>
+                          <a class="dropdown-item" href="listings-full.html">Horror</a>
+                          <a class="dropdown-item" href="listings-full.html">RPG</a>
+                          <a class="dropdown-item" href="listings-full.html">MMO</a>
+                          <a class="dropdown-item" href="listings-full.html">First Person Shooter</a>
+                          <a class="dropdown-item" href="listings-full.html">Third Person Shooter</a>
+                      </div>
+                  </li>
+              </ul>
+              <ul class="navbar-nav mr-2 mt-2 mt-lg-0">
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                          aria-haspopup="true" aria-expanded="false">Listings</a>
+                      <div class="dropdown-menu">
+                          <a class="dropdown-item" href="currently-listed.html">Currently listed</a>
+                          <a class="dropdown-item" href="create-listing.html">Create listing</a>
+                          <a class="dropdown-item" href="current-bids.html">Current bids</a>
+                      </div>
+                  </li>
+              </ul>
+              <ul class="navbar-nav mr-5 ml-2 mt-2 mt-lg-0">
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                          aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i> Account</a>
+                      <div class="dropdown-menu">
+                          <a class="dropdown-item" href="#">My account</a>
+                          <a class="dropdown-item" href="#">Sign out</a>
+                      </div>
+                  </li>
+              </ul>
+          </div>
+      </nav>
+      <!-- NAV END -->
+      <!-- SEARCH AREA -->
+      <div class="jumbotron jumbotron-fluid card card-image mb-4 hero-area" style="background: url('../img/hero-img.jpg');">
+          <div class="container">
+              <div class="row justify-content-center mt-5 pb-4">
+                  <div class="col-md-12">
+                      <div class="jumbotron shadow py-4 mb-5 ">
+                          <form>
+                              <h1 class="text-center">Find your next game</h1>
+                              <div class="input-group">
+                                  <!-- <div class="input-group=append"> -->
+                                  <input type="text" class="form-control" id="searchForm-input"
+                                      placeholder="Search by Keyword...">
+                                  <!-- </div> -->
+                                  <div class="input-group-append">
+                                      <button type="submit" class="btn btn-outline-primary">Submit</button>
+                                  </div>
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- SEARCH AREA END -->
+      <div class="container">
+          <h2 class="mb-4 text-white">Popular</h2>
+          <!-- FEATURED CAROUSEL -->
+          <div id="featured-carousel" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                  <div class="card text-white bg-dark carousel-item active">
+                      <div class="row no-gutters">
+                          <div class="col-md-8">
+                              <h3 class="featured-badge"><span class="badge badge-secondary">Featured</span></h3>
+                              <img src="https://dummyimage.com/760x400/3b3b3b/FFFFFF" class="img-fluid d-block w-100">
+                          </div>
+                          <div class="col-md-4">
+                              <div class="card-body">
+                                  <h5 class="card-title">Game Name</h5>
+                                  <p class="card-text">Excerpt goes here.</p>
+                              </div>
+                              <ul class="list-group list-group-flush">
+                                  <li class="list-group-item text-white bg-dark"><span><i class="fas fa-gamepad"></i>
+                                          1-2</span></li>
+                                  <li class="list-group-item text-white bg-dark">MA15+</li>
+                                  <li class="list-group-item text-white bg-dark">ACTION</li>
+                              </ul>
+                              <div class="card-body">
+                                  <div class="row align-items-center">
+                                      <div class="col-sm-6">
+                                          <p class="card-text">$00.00</p>
+                                      </div>
+                                      <div class="col-sm-6 text-right">
+                                          <a href="view-listings.html" class="card-link btn btn-primary">View</a>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="card text-white bg-dark carousel-item active">
+                      <div class="row no-gutters">
+                          <div class="col-md-8">
+                              <h3 class="featured-badge"><span class="badge badge-secondary">Featured</span></h3>
+                              <img src="https://dummyimage.com/760x400/3b3b3b/FFFFFF" class="img-fluid d-block w-100">
+                          </div>
+                          <div class="col-md-4">
+                              <div class="card-body">
+                                  <h5 class="card-title">Game Name</h5>
+                                  <p class="card-text">Excerpt goes here.</p>
+                              </div>
+                              <ul class="list-group list-group-flush">
+                                  <li class="list-group-item text-white bg-dark"><span><i class="fas fa-gamepad"></i>
+                                          1-2</span></li>
+                                  <li class="list-group-item text-white bg-dark">MA15+</li>
+                                  <li class="list-group-item text-white bg-dark">ACTION</li>
+                              </ul>
+                              <div class="card-body">
+                                  <div class="row align-items-center">
+                                      <div class="col-sm-6">
+                                          <p class="card-text">$00.00</p>
+                                      </div>
+                                      <div class="col-sm-6 text-right">
+                                          <a href="view-listings.html" class="card-link btn btn-primary">View</a>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="card text-white bg-dark carousel-item active">
+                      <div class="row no-gutters">
+                          <div class="col-md-8">
+                              <h3 class="featured-badge"><span class="badge badge-secondary">Featured</span></h3>
+                              <img src="https://dummyimage.com/760x400/3b3b3b/FFFFFF" class="img-fluid d-block w-100">
+                          </div>
+                          <div class="col-md-4">
+                              <div class="card-body">
+                                  <h5 class="card-title">Game Name</h5>
+                                  <p class="card-text">Excerpt goes here.</p>
+                              </div>
+                              <ul class="list-group list-group-flush">
+                                  <li class="list-group-item text-white bg-dark"><span><i class="fas fa-gamepad"></i>
+                                          1-2</span></li>
+                                  <li class="list-group-item text-white bg-dark">MA15+</li>
+                                  <li class="list-group-item text-white bg-dark">ACTION</li>
+                              </ul>
+                              <div class="card-body">
+                                  <div class="row align-items-center">
+                                      <div class="col-sm-6">
+                                          <p class="card-text">$00.00</p>
+                                      </div>
+                                      <div class="col-sm-6 text-right">
+                                          <a href="view-listings.html" class="card-link btn btn-primary">View</a>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- FEATURED CAROUSEL END -->
+          <!-- HOME LISTINGS -->
+          <div id="home-listings" class="my-5">
+              <div class="row mb-5">
+                  <div class="col-lg">
+                      <div class="card text-white bg-dark">
+                          <img src="https://dummyimage.com/3b3b3b/FFFFFF" class="img-fluid d-block w-100">
+                          <div class="card-body">
+                              <h5 class="card-title">Game Name</h5>
+                              <p class="card-text">Excerpt goes here.</p>
+                          </div>
+                          <ul class="list-group list-group-flush">
+                              <li class="list-group-item text-white bg-dark"><span><i class="fas fa-gamepad"></i>
+                                      1</span></li>
+                              <li class="list-group-item text-white bg-dark">MA15+</li>
+                              <li class="list-group-item text-white bg-dark">ACTION</li>
+                          </ul>
+                          <div class="card-body">
+                              <div class="row align-items-center">
+                                  <div class="col-sm-6">
+                                      <p class="card-text">$00.00</p>
+                                  </div>
+                                  <div class="col-sm-6 text-right">
+                                      <a href="view-listings.html" class="card-link btn btn-primary">View</a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg">
+                      <div class="card text-white bg-dark">
+                          <img src="https://dummyimage.com/3b3b3b/FFFFFF" class="img-fluid d-block w-100">
+                          <div class="card-body">
+                              <h5 class="card-title">Game Name</h5>
+                              <p class="card-text">Excerpt goes here.</p>
+                          </div>
+                          <ul class="list-group list-group-flush">
+                              <li class="list-group-item text-white bg-dark"><span><i class="fas fa-gamepad"></i>
+                                      1</span></li>
+                              <li class="list-group-item text-white bg-dark">MA15+</li>
+                              <li class="list-group-item text-white bg-dark">ACTION</li>
+                          </ul>
+                          <div class="card-body">
+                              <div class="row align-items-center">
+                                  <div class="col-sm-6">
+                                      <p class="card-text">$00.00</p>
+                                  </div>
+                                  <div class="col-sm-6 text-right">
+                                      <a href="view-listings.html" class="card-link btn btn-primary">View</a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg">
+                      <div class="card text-white bg-dark">
+                          <img src="https://dummyimage.com/3b3b3b/FFFFFF" class="img-fluid d-block w-100">
+                          <div class="card-body">
+                              <h5 class="card-title">Game Name</h5>
+                              <p class="card-text">Excerpt goes here.</p>
+                          </div>
+                          <ul class="list-group list-group-flush">
+                              <li class="list-group-item text-white bg-dark"><span><i class="fas fa-gamepad"></i>
+                                      1</span></li>
+                              <li class="list-group-item text-white bg-dark">MA15+</li>
+                              <li class="list-group-item text-white bg-dark">ACTION</li>
+                          </ul>
+                          <div class="card-body">
+                              <div class="row align-items-center">
+                                  <div class="col-sm-6">
+                                      <p class="card-text">$00.00</p>
+                                  </div>
+                                  <div class="col-sm-6 text-right">
+                                      <a href="view-listings.html" class="card-link btn btn-primary">View</a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="row mb-5">
+                  <div class="col-lg">
+                      <div class="card text-white bg-dark">
+                          <img src="https://dummyimage.com/3b3b3b/FFFFFF" class="img-fluid d-block w-100">
+                          <div class="card-body">
+                              <h5 class="card-title">Game Name</h5>
+                              <p class="card-text">Excerpt goes here.</p>
+                          </div>
+                          <ul class="list-group list-group-flush">
+                              <li class="list-group-item text-white bg-dark"><span><i class="fas fa-gamepad"></i>
+                                      1</span></li>
+                              <li class="list-group-item text-white bg-dark">MA15+</li>
+                              <li class="list-group-item text-white bg-dark">ACTION</li>
+                          </ul>
+                          <div class="card-body">
+                              <div class="row align-items-center">
+                                  <div class="col-sm-6">
+                                      <p class="card-text">$00.00</p>
+                                  </div>
+                                  <div class="col-sm-6 text-right">
+                                      <a href="view-listings.html" class="card-link btn btn-primary">View</a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg">
+                      <div class="card text-white bg-dark">
+                          <img src="https://dummyimage.com/3b3b3b/FFFFFF" class="img-fluid d-block w-100">
+                          <div class="card-body">
+                              <h5 class="card-title">Game Name</h5>
+                              <p class="card-text">Excerpt goes here.</p>
+                          </div>
+                          <ul class="list-group list-group-flush">
+                              <li class="list-group-item text-white bg-dark"><span><i class="fas fa-gamepad"></i>
+                                      1</span></li>
+                              <li class="list-group-item text-white bg-dark">MA15+</li>
+                              <li class="list-group-item text-white bg-dark">ACTION</li>
+                          </ul>
+                          <div class="card-body">
+                              <div class="row align-items-center">
+                                  <div class="col-sm-6">
+                                      <p class="card-text">$00.00</p>
+                                  </div>
+                                  <div class="col-sm-6 text-right">
+                                      <a href="view-listings.html" class="card-link btn btn-primary">View</a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg">
+                      <div class="card text-white bg-dark">
+                          <img src="https://dummyimage.com/3b3b3b/FFFFFF" class="img-fluid d-block w-100">
+                          <div class="card-body">
+                              <h5 class="card-title">Game Name</h5>
+                              <p class="card-text">Excerpt goes here.</p>
+                          </div>
+                          <ul class="list-group list-group-flush">
+                              <li class="list-group-item text-white bg-dark"><span><i class="fas fa-gamepad"></i>
+                                      1</span></li>
+                              <li class="list-group-item text-white bg-dark">MA15+</li>
+                              <li class="list-group-item text-white bg-dark">ACTION</li>
+                          </ul>
+                          <div class="card-body">
+                              <div class="row align-items-center">
+                                  <div class="col-sm-6">
+                                      <p class="card-text">$00.00</p>
+                                  </div>
+                                  <div class="col-sm-6 text-right">
+                                      <a href="view-listings.html" class="card-link btn btn-primary">View</a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- HOME LISTINGS END -->
+      </div>
+
+      <!-- FOOTER -->
+      <footer class="footer bg-dark text-white">
+          <div class="container">
+              <div class="row justify-content-center py-3">
+                  <div class="text-center">
+                      <p>2019 © <a href="index.html">FFA</a></p>
+                  </div>
+              </div>
+          </div>
+      </footer>
+      <!-- FOOTER END -->
+
+  </body>
+
+  </html>

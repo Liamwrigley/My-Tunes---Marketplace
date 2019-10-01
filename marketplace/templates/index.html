@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block search %}
+{% block content %}
 <!-- SEARCH AREA -->
 <div class="jumbotron jumbotron-fluid card card-image mb-4 hero-area" style="background: url('../img/hero-img.jpg');">
     <div class="container">
@@ -25,10 +25,9 @@
     </div>
 </div>
 <!-- SEARCH AREA END -->
-{% endblock %}
 
 
-{% block carousel %}
+<div class="container">
 {% if listing.featured %}
 <h2 class="mb-4 text-white">Popular</h2>
 <!-- FEATURED CAROUSEL -->
@@ -70,9 +69,7 @@
 </div>
 <!-- FEATURED CAROUSEL END -->
 {% endif %}
-{% endblock %}
 
-{% block content %}
 <!-- HOME LISTINGS -->
 <div id="home-listings" class="my-5">
     <div class="row mb-5">
@@ -231,4 +228,5 @@
     </div>
 </div>
 <!-- HOME LISTINGS END -->
+</div>
 {% endblock %}

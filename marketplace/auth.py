@@ -1,6 +1,6 @@
-from flask import ( 
+from flask import (
     Blueprint, flash, render_template, request, url_for, redirect
-) 
+)
 from werkzeug.security import generate_password_hash,check_password_hash
 from .models import User
 from .forms import LoginForm,RegisterForm
@@ -10,7 +10,6 @@ from . import db
 
 #create a blueprint
 bp = Blueprint('auth', __name__)
-
 
 @bp.route('/login', methods=['GET','POST'])
 def login():
@@ -69,11 +68,12 @@ def register():
     else:
         return render_template('user.html', form=register, heading='Register')
 
-    
+
 
 
 
 @bp.route('/logout')
-#@login_required
+@login_required
 def logout():
+    logout_user()
     return redirect(url_for('auth.login'))

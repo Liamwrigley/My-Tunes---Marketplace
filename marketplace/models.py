@@ -26,14 +26,17 @@ class Listing(db.Model):
     price = db.Column(db.String(10))
     genre = db.Column(db.string(25))
 
+    # Creates relation between User and Listing
+    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    owner = db.relationship('User', foreign_keys=[owner_id])
     # ... Create the Comments db.relationship
 	  # relation to call destination.comments and comment.destination
     #comments = db.relationship('Comment', backref='destination')
 
-    
-	
+
+
     def __repr__(self): #string print method
-        return "<Name: {}>".format(self.name)
+        return "<Name: {}, ID: {}>".format(self.name, self.id)
 
 # class Comment(db.Model):
 #     __tablename__ = 'comments'

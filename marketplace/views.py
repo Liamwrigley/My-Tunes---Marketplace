@@ -6,5 +6,5 @@ bp = Blueprint('main', __name__, template_folder="templates")
 
 @bp.route('/', endpoint="home")
 def home():
-  #listing = Listing.query.all()
-    return render_template('index.html') #add ,listing=listing
+    listing = Listing.query.all()
+    return render_template('index.html', listing=listing)

@@ -8,7 +8,7 @@
             <div class="col-md-12">
                 <div class="jumbotron shadow py-4 mb-5 ">
                     <form>
-                        <h1 class="text-center">Find your next game</h1>
+                        <h1 class="text-center">Find your next tune</h1>
                         <div class="input-group">
                             <!-- <div class="input-group=append"> -->
                             <input type="text" class="form-control" id="searchForm-input"
@@ -57,7 +57,7 @@
                                 <p class="card-text">{{listing.price}}</p>
                             </div>
                             <div class="col-sm-6 text-right">
-                                <a href="{{url_for('listing.show', id=listing.id)}}" class="card-link btn btn-primary">View</a>
+                                <a href="{{ url_for('listing.show', id=item.id )}}" class="card-link btn btn-primary">View</a>
                             </div>
                         </div>
                     </div>
@@ -72,161 +72,40 @@
 
 <!-- HOME LISTINGS -->
 <div id="home-listings" class="my-5">
-    <div class="row mb-5">
-        <div class="col-lg">
-            <div class="card text-white bg-dark">
-                <img src="https://dummyimage.com/3b3b3b/FFFFFF" class="img-fluid d-block w-100">
-                <div class="card-body">
-                    <h5 class="card-title">Game Name</h5>
-                    <p class="card-text">Excerpt goes here.</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item text-white bg-dark"><span><i class="fas fa-gamepad"></i>
-                            1</span></li>
-                    <li class="list-group-item text-white bg-dark">MA15+</li>
-                    <li class="list-group-item text-white bg-dark">ACTION</li>
-                </ul>
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-sm-6">
-                            <p class="card-text">$00.00</p>
-                        </div>
-                        <div class="col-sm-6 text-right">
-                            <a href="view-listings.html" class="card-link btn btn-primary">View</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    {% if listing %}
+      {% for row in listing|batch(3) %}
+        <div class="row mb-5">
+        {% for item in row %}
+          <div class="col-lg">
+              <div class="card text-white bg-dark">
+                  <img src="https://dummyimage.com/3b3b3b/FFFFFF" class="img-fluid d-block w-100">
+                  <div class="card-body">
+                      <h5 class="card-title">{{item.name}}</h5>
+                      <p class="card-text">{{item.description}}</p>
+                  </div>
+                  <ul class="list-group list-group-flush">
+                      <li class="list-group-item text-white bg-dark"><span><i class="fas fa-gamepad"></i>
+                              1</span></li>
+                      <li class="list-group-item text-white bg-dark">MA15+</li>
+                      <li class="list-group-item text-white bg-dark">{{item.genre}}</li>
+                  </ul>
+                  <div class="card-body">
+                      <div class="row align-items-center">
+                          <div class="col-sm-6">
+                              <p class="card-text">${{item.id}}</p>
+                          </div>
+                          <div class="col-sm-6 text-right">
+                              <a href="{{ url_for('listing.show', id=item.id )}}" class="card-link btn btn-primary">View</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        {% endfor %}
         </div>
-        <div class="col-lg">
-            <div class="card text-white bg-dark">
-                <img src="https://dummyimage.com/3b3b3b/FFFFFF" class="img-fluid d-block w-100">
-                <div class="card-body">
-                    <h5 class="card-title">Game Name</h5>
-                    <p class="card-text">Excerpt goes here.</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item text-white bg-dark"><span><i class="fas fa-gamepad"></i>
-                            1</span></li>
-                    <li class="list-group-item text-white bg-dark">MA15+</li>
-                    <li class="list-group-item text-white bg-dark">ACTION</li>
-                </ul>
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-sm-6">
-                            <p class="card-text">$00.00</p>
-                        </div>
-                        <div class="col-sm-6 text-right">
-                            <a href="view-listings.html" class="card-link btn btn-primary">View</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg">
-            <div class="card text-white bg-dark">
-                <img src="https://dummyimage.com/3b3b3b/FFFFFF" class="img-fluid d-block w-100">
-                <div class="card-body">
-                    <h5 class="card-title">Game Name</h5>
-                    <p class="card-text">Excerpt goes here.</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item text-white bg-dark"><span><i class="fas fa-gamepad"></i>
-                            1</span></li>
-                    <li class="list-group-item text-white bg-dark">MA15+</li>
-                    <li class="list-group-item text-white bg-dark">ACTION</li>
-                </ul>
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-sm-6">
-                            <p class="card-text">$00.00</p>
-                        </div>
-                        <div class="col-sm-6 text-right">
-                            <a href="view-listings.html" class="card-link btn btn-primary">View</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row mb-5">
-        <div class="col-lg">
-            <div class="card text-white bg-dark">
-                <img src="https://dummyimage.com/3b3b3b/FFFFFF" class="img-fluid d-block w-100">
-                <div class="card-body">
-                    <h5 class="card-title">Game Name</h5>
-                    <p class="card-text">Excerpt goes here.</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item text-white bg-dark"><span><i class="fas fa-gamepad"></i>
-                            1</span></li>
-                    <li class="list-group-item text-white bg-dark">MA15+</li>
-                    <li class="list-group-item text-white bg-dark">ACTION</li>
-                </ul>
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-sm-6">
-                            <p class="card-text">$00.00</p>
-                        </div>
-                        <div class="col-sm-6 text-right">
-                            <a href="view-listings.html" class="card-link btn btn-primary">View</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg">
-            <div class="card text-white bg-dark">
-                <img src="https://dummyimage.com/3b3b3b/FFFFFF" class="img-fluid d-block w-100">
-                <div class="card-body">
-                    <h5 class="card-title">Game Name</h5>
-                    <p class="card-text">Excerpt goes here.</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item text-white bg-dark"><span><i class="fas fa-gamepad"></i>
-                            1</span></li>
-                    <li class="list-group-item text-white bg-dark">MA15+</li>
-                    <li class="list-group-item text-white bg-dark">ACTION</li>
-                </ul>
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-sm-6">
-                            <p class="card-text">$00.00</p>
-                        </div>
-                        <div class="col-sm-6 text-right">
-                            <a href="view-listings.html" class="card-link btn btn-primary">View</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg">
-            <div class="card text-white bg-dark">
-                <img src="https://dummyimage.com/3b3b3b/FFFFFF" class="img-fluid d-block w-100">
-                <div class="card-body">
-                    <h5 class="card-title">Game Name</h5>
-                    <p class="card-text">Excerpt goes here.</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item text-white bg-dark"><span><i class="fas fa-gamepad"></i>
-                            1</span></li>
-                    <li class="list-group-item text-white bg-dark">MA15+</li>
-                    <li class="list-group-item text-white bg-dark">ACTION</li>
-                </ul>
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-sm-6">
-                            <p class="card-text">$00.00</p>
-                        </div>
-                        <div class="col-sm-6 text-right">
-                            <a href="view-listings.html" class="card-link btn btn-primary">View</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+      {% endfor %}
+    {% endif %}
+  </div>
 <!-- HOME LISTINGS END -->
 </div>
 {% endblock %}

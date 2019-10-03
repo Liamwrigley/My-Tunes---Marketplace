@@ -24,7 +24,7 @@ class Listing(db.Model):
     description = db.Column(db.String(200))
     image = db.Column(db.String(400))
     price = db.Column(db.String(10))
-    genre = db.Column(db.string(25))
+    genre = db.Column(db.String(25))
 
     # Creates relation between User and Listing
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))

@@ -7,14 +7,14 @@ from . import db
 from flask_login import login_required, current_user
 
 #create a blueprint
-bp = Blueprint('listing', __name__, url_prefix='/listings')
+bp = Blueprint('listing', __name__, url_prefix='/listing')
 
 #create a page that will show the details fo the destination
 @bp.route('/<int:id>')
 def show(id):
   listing = Listing.query.filter_by(id=id).first()
   # cform = CommentForm()
-  return render_template('listings/show.html', listing=listing, form=cfor)
+  return render_template('listings/show.html', listing=listing) #, form=cfor
 
 
 @bp.route('/create', methods = ['GET', 'POST'])

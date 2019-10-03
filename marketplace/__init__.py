@@ -12,7 +12,7 @@ def create_app():
 
     app=Flask(__name__)  # this is the name of the module/package that is calling this app
     app.debug=True
-    app.secret_key='utroutoru'
+    app.secret_key='supersecretkey'
     #set the app configuration data
     app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///marketplace.sqlite'
     #initialize db with flask app
@@ -46,5 +46,8 @@ def create_app():
 
     from . import auth
     app.register_blueprint(auth.bp)
+
+    from .listings import bp
+    app.register_blueprint(bp)
 
     return app

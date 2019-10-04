@@ -21,6 +21,7 @@ pip install flask
 pip install flask_bootstrap
 pip install flask_sqlalchemy
 pip install flask_login
+pip install flask_wtf
 ```
 
 ## Running Application

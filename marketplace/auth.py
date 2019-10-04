@@ -33,16 +33,16 @@ def login():
             login_user(user_check)
             return redirect(url_for('main.index'))
         else:
-            flash(error)
-    return render_template('user.html')
+            flash(error, "danger")
+    return render_template('user.html', form=login_form, heading='Login')
 
 @bp.route('/register', methods=['GET','POST'])
 def register():
-    register = registerForm()
+    register = RegisterForm()
     if (register.validate_on_submit() == True):
         user_name = register.user_name.data
-        pw = register.pw.data
-        email = register.email.data
+        pw = register.password.data
+        email = register.email_id.data
 
         #check if username already exists within DB
         user_check = User.query.filter_by(name=user_name).first()
@@ -50,12 +50,12 @@ def register():
 
         #if user_check returns a user - redirect to register
         if user_check:
-            flash('This user already exists, please use a different username or login')
+            flash('This user already exists, please use a different username or login', "danger")
             return redirect(url_for('auth.register'))
 
         #if email_check returns a user - redirect to register
         if email_check:
-            flash('This email is already in use, please use a different email or login')
+            flash('This email is already in use, please use a different email or login', 'danger')
             return redirect(url_for('auth.register'))
 
         #if user_check does not return a user - insert data into DB
@@ -64,6 +64,7 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         #once commited to DB - redirect to login
+        flash('Registration Successful! Please login.', 'success')
         return redirect(url_for('auth.login'))
     else:
         return render_template('user.html', form=register, heading='Register')

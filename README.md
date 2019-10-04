@@ -36,7 +36,7 @@ This is a group QUT project collaborated on by 3 members:
 
  - [Jack Stanyon](https://github.com/stanyonja/)
  - [Liam Wrigley](https://github.com/liamwrigley/)
- - Quoi McGowan
+ - [Quoi McGowan](https://github.com/quoim)
 
 
 ## License

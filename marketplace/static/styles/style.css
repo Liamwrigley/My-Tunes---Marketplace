@@ -1,12 +1,18 @@
 body {
     background-color: #272727;
 }
+
+p, h4 {
+    color: white;
+}
+
 .jumbotron-fluid.hero-area {
     background-size: cover !important;
     background-position-y: 30% !important;
     justify-content: center;
     height: 600px;
 }
+
 .featured-badge {
     position: absolute;
     top: 15px;
@@ -41,6 +47,7 @@ position: absolute;
 top: 5px;
 left: 20px;
 }
+
 .listing-badge-rating {
     position: absolute;
     bottom: 18px;

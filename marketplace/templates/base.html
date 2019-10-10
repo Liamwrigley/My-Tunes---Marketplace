@@ -40,7 +40,7 @@
             <!-- <a class="navbar-brand" href="#">FFA</a> -->
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{{ url_for('main.home') }}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <!-- <li class="nav-item">
                     <a class="nav-link" href="#">Nav-Item</a>
@@ -65,7 +65,7 @@
                         aria-haspopup="true" aria-expanded="false">Listings</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="currently-listed.html">Currently listed</a>
-                        <a class="dropdown-item" href="create-listing.html">Create listing</a>
+                        <a class="dropdown-item" href="{{ url_for('listing.create') }}">Create listing</a>
                         <a class="dropdown-item" href="current-bids.html">Current bids</a>
                     </div>
                 </li>

@@ -4,3 +4,5 @@
 *.pyc
 
 .vscode/
+
+marketplace/static/listing_images/

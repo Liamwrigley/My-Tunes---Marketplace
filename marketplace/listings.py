@@ -17,7 +17,8 @@ bp = Blueprint('listing', __name__, url_prefix='/listing')
 def show(id):
   listing = Listing.query.filter_by(id=id).first()
   # cform = CommentForm()
-  return render_template('listings/show.html', listing=listing) #, form=cfor
+  user = User.query.filter_by(id=listing.owner_id).first()
+  return render_template('listings/show.html', listing=listing, user=user) #, form=cfor
 
 
 @bp.route('/create', methods = ['GET', 'POST'])
@@ -27,22 +28,25 @@ def create():
   if listing_form.validate_on_submit():
     # on successful validation add data
     listing = Listing(name=listing_form.name.data,
+                artist=listing_form.artist.data,
                 description=listing_form.description.data,
-                image=('/listing_images/' + listing_form.image.data.filename),
+                image=('/static/listing_images/' + listing_form.image.data.filename),
                 price=listing_form.price.data,
                 genre=listing_form.genre.data,
                 owner_id=current_user.id)
 
     if request.method == 'POST':
       f = listing_form.image.data
-      f.save(os.path.join('marketplace\\listing_images', secure_filename(f.filename)))
+      f.save(os.path.join('marketplace\\static\\listing_images', secure_filename(f.filename)))
 
     # push to db
     db.session.add(listing)
     db.session.commit()
 
     flash('Successfully created new listing', 'success')
-    return redirect(url_for('main.home')) #probably change this to route somewhere else
+
+    #redirect to created listing
+    return redirect(url_for('listing.show', id=listing.id))
 
   return render_template('listings/create.html', form=listing_form, heading='Create Listing')
 

@@ -21,10 +21,12 @@ class Listing(db.Model):
     __tablename__ = 'listings'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
+    artist = db.Column(db.String(80))
     description = db.Column(db.String(200))
     image = db.Column(db.String(400))
     price = db.Column(db.String(10))
     genre = db.Column(db.String(25))
+    created_at = db.Column(db.DateTime, default=datetime.now())
 
     # Creates relation between User and Listing
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))

@@ -18,6 +18,7 @@ class PriceFloatField(FloatField):
 #listing creation form
 class ListingForm(FlaskForm):
   name = StringField('Song', validators=[InputRequired()])
+  artist = StringField('Artist', validators=[InputRequired()])
   description = TextAreaField('Description', 
             validators=[InputRequired(), Length(min=10, max=200)])
   image = FileField('Image', validators=[

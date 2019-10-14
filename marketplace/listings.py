@@ -12,6 +12,10 @@ import app
 #create a blueprint
 bp = Blueprint('listing', __name__, url_prefix='/listing')
 
+
+#-------------------------------------------------------------------
+
+#-----/show/id-----
 #create a page that will show the details fo the destination
 @bp.route('/<int:id>')
 def show(id):
@@ -19,8 +23,18 @@ def show(id):
   # cform = CommentForm()
   user = User.query.filter_by(id=listing.owner_id).first()
   return render_template('listings/show.html', listing=listing, user=user) #, form=cfor
+#-----/show/id-----END
 
+#-----/my_listings-----
+#Shows all listings belonging to current user
+@bp.route('/my_listings')
+@login_required   #decorator between the route and view function
+def my_listings():
+  listing = Listing.query.filter_by(owner_id=current_user.id).all()
+  return render_template('listings/currently-listed.html', listing=listing)
+#-----/my_listings-----END
 
+#-----/create-----
 @bp.route('/create', methods = ['GET', 'POST'])
 @login_required   #decorator between the route and view function
 def create():
@@ -49,6 +63,42 @@ def create():
     return redirect(url_for('listing.show', id=listing.id))
 
   return render_template('listings/create.html', form=listing_form, heading='Create Listing')
+#-----/create-----END
+
+#-----/edit/id-----
+@bp.route('/edit/<int:id>', methods = ['GET', 'POST'])
+@login_required   #decorator between the route and view function
+def edit(id):
+  listing = Listing.query.filter_by(id=id).first()
+
+  #check if current user is poster of listing
+  if (current_user.id == listing.owner_id):
+    listing_form = ListingForm()
+    if listing_form.validate_on_submit():
+      listing.name=listing_form.name.data
+      listing.artist=listing_form.artist.data
+      listing.description=listing_form.description.data
+      listing.image=('/static/listing_images/' + listing_form.image.data.filename)
+      listing.price=listing_form.price.data
+      listing.genre=listing_form.genre.data
+      listing.owner_id=current_user.id
+
+      if request.method == 'POST':
+        f = listing_form.image.data
+        f.save(os.path.join('marketplace\\static\\listing_images', secure_filename(f.filename)))
+
+      # update db
+      db.session.commit()
+
+      flash('Successfully edited listing', 'success')
+
+      #redirect to created listing
+      return redirect(url_for('listing.show', id=id))
+  else:
+    return redirect(url_for('listing.show', id=id))
+
+  return render_template('listings/create.html', form=listing_form, heading='Edit Listing')
+#-----/edit/id-----END
 
 # @bp.route('/<destination>/comment', methods = ['GET', 'POST'])
 # @login_required

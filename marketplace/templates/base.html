@@ -61,7 +61,7 @@
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
                         aria-haspopup="true" aria-expanded="false">Listings</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="currently-listed.html">Currently listed</a>
+                        <a class="dropdown-item" href="{{ url_for('listing.my_listings') }}">Currently listed</a>
                         <a class="dropdown-item" href="{{ url_for('listing.create') }}">Create listing</a>
                         <a class="dropdown-item" href="current-bids.html">Current bids</a>
                     </div>
@@ -100,10 +100,14 @@
             </div>
         </div>
         <script>
+            //Back button
             function goBack() {
                 window.history.back();
             }
-        
+            //enable tooltips
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })        
         </script>
     </footer>
     <!-- FOOTER END -->

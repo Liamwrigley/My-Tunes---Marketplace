@@ -32,10 +32,8 @@ p, h4 {
     height: 100%;
     width: 100%;
 }
-.back-btn {
-    position: absolute;
-    top: 5px;
-    righT: 5px;
+.listing-button-area {
+
 }
 
 a.listing-actions {
@@ -48,7 +46,7 @@ top: 5px;
 left: 20px;
 }
 
-.listing-badge-rating {
+.listing-badge-artist {
     position: absolute;
     bottom: 18px;
     right: 20px;

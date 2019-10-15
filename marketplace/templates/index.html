@@ -78,21 +78,20 @@
         {% for item in row %}
           <div class="col-lg">
               <div class="card text-white bg-dark">
-                  <img src="https://dummyimage.com/3b3b3b/FFFFFF" class="img-fluid d-block w-100">
+                  <img src="{{item.image}}" class="img-fluid d-block w-100">
                   <div class="card-body">
                       <h5 class="card-title">{{item.name}}</h5>
                       <p class="card-text">{{item.description}}</p>
                   </div>
                   <ul class="list-group list-group-flush">
-                      <li class="list-group-item text-white bg-dark"><span><i class="fas fa-gamepad"></i>
-                              1</span></li>
-                      <li class="list-group-item text-white bg-dark">MA15+</li>
-                      <li class="list-group-item text-white bg-dark">{{item.genre}}</li>
+                      <li class="list-group-item text-white bg-dark"><i class="fas fa-portrait"></i> {{item.artist}}</li>
+                      <li class="list-group-item text-white bg-dark"><i class="fas fa-compact-disc"></i> {{item.genre}}</li>
+                      <li class="list-group-item text-white bg-dark"><i class="fas fa-calendar-alt"></i> {{item.created_at}}</li>
                   </ul>
                   <div class="card-body">
                       <div class="row align-items-center">
                           <div class="col-sm-6">
-                              <p class="card-text">${{item.id}}</p>
+                              <p class="card-text">${{item.price}}</p>
                           </div>
                           <div class="col-sm-6 text-right">
                               <a href="{{ url_for('listing.show', id=item.id )}}" class="card-link btn btn-primary">View</a>

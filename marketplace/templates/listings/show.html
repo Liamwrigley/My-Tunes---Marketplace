@@ -30,7 +30,7 @@
                             {% if current_user.id == listing.owner_id %}
                                 <a href="{{ url_for('listing.edit', id=listing.id )}}" type="button" class="btn btn-info btn-sm">Edit Listing</a>
                             {% endif %}
-                            <button onclick="goBack()" type="button" class="btn btn-secondary btn-sm">Back</button>
+                            <!-- <button onclick="goBack()" type="button" class="btn btn-secondary btn-sm">Back</button> -->
                       </div>
                   </div>
               </div>

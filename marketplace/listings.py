@@ -2,7 +2,7 @@ import os
 from flask import (
     Blueprint, flash, render_template, request, url_for, redirect
 )
-from .models import Listing,User #add Comment back later
+from .models import Listing,User,Bid #add Comment back later
 from .forms import ListingForm #add comment form later
 from . import db
 from flask_login import login_required, current_user
@@ -33,6 +33,26 @@ def my_listings():
   listing = Listing.query.filter_by(owner_id=current_user.id).all()
   return render_template('listings/currently-listed.html', listing=listing)
 #-----/my_listings-----END
+
+#-----/bid-----
+@bp.route('/bid/<int:id>', methods = ['GET', 'POST'])
+@login_required   #decorator between the route and view function
+def makebid(id):
+  listing = Listing.query.filter_by(id=id).first()
+  already_bid = Bid.query.filter_by(bidder_id=current_user.id, listing_id=id).first()
+  if (listing != None and already_bid == None):
+    bid = Bid(bidder_id=current_user.id, listing_id=id)
+
+    db.session.add(bid)
+    db.session.commit()
+
+    flash('Bid Successful!', 'success')
+
+    return redirect(url_for('listing.show', id=id))
+  else:
+    flash('Bid already exists!', 'danger')
+    return redirect(url_for('listing.show', id=id))
+
 
 #-----/create-----
 @bp.route('/create', methods = ['GET', 'POST'])

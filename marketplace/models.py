@@ -15,6 +15,8 @@ class User(db.Model, UserMixin):
     # relation to call user.comments and comment.created_by
     #comments = db.relationship('Comment', backref='user')
 
+    def __repr__(self): #string print method
+        return "<ID: {}, Name: {}, EmailID: {}, pwhash: {}>".format(self.id, self.name, self.emailid, self.password_hash)
 
 
 class Listing(db.Model):
@@ -27,18 +29,40 @@ class Listing(db.Model):
     price = db.Column(db.String(10))
     genre = db.Column(db.String(25))
     created_at = db.Column(db.DateTime, default=datetime.now())
+    available = db.Column(db.Boolean, default=True, nullable=False)
 
     # Creates relation between User and Listing
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     owner = db.relationship('User', foreign_keys=[owner_id])
+
     # ... Create the Comments db.relationship
 	  # relation to call destination.comments and comment.destination
     #comments = db.relationship('Comment', backref='destination')
 
+    def __repr__(self): #string print method
+        return "<ID: {}, Name: {}, Artist: {}, Description: {}, img: {}, price: {}, genre: {}, create date: {}>".format(self.id, self.name, self.artist, self.description, self.image, self.price, self.genre, self.created_at)
 
+
+class Bid(db.Model):
+    __tablename__ = 'bids'
+    id = db.Column(db.Integer, primary_key=True)
+    bid_time = db.Column(db.DateTime, default=datetime.now())
+
+    #foreign keys
+    bidder_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    listing_id = db.Column(db.Integer, db.ForeignKey('listings.id'))
+
+    # # Creates relation between User and Bid
+    bidder = db.relationship('User', foreign_keys=[bidder_id])
+
+    # # Creates relation between Listing and Bid
+    listing = db.relationship('Listing', foreign_keys=[listing_id])
 
     def __repr__(self): #string print method
-        return "<Name: {}, ID: {}>".format(self.name, self.id)
+        return "<ID: {}, bidder_id: {}, listing_id: {}, bid_time: {}\nbidderRELATION: {}\nlistingRELATION: {}>".format(self.id, self.bidder_id, self.listing_id, self.bid_time, self.bidder, self.listing)
+
+
+
 
 # class Comment(db.Model):
 #     __tablename__ = 'comments'

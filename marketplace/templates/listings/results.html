@@ -1,0 +1,43 @@
+{% extends 'base.html' %}          
+
+{% block content %}
+<div class="container">
+  <div>
+    <p>PLEASE ADD A SEARCH MODULE HERE THAT SITS ABOVE RESULTS</p>
+  </div>
+  <div id="home-listings" class="my-5 container">
+    {% if listing %}
+      {% for row in listing|batch(3) %}
+        <div class="row mb-5">
+        {% for item in row %}
+          <div class="col-lg">
+              <div class="card text-white bg-dark">
+                  <img src="{{item.image}}" class="img-fluid d-block w-100">
+                  <div class="card-body">
+                      <h5 class="card-title">{{item.name}}</h5>
+                      <p class="card-text">{{item.description}}</p>
+                  </div>
+                  <ul class="list-group list-group-flush">
+                      <li class="list-group-item text-white bg-dark"><i class="fas fa-portrait"></i> {{item.artist}}</li>
+                      <li class="list-group-item text-white bg-dark"><i class="fas fa-compact-disc"></i> {{item.genre}}</li>
+                      <li class="list-group-item text-white bg-dark"><i class="fas fa-calendar-alt"></i> {{item.created_at}}</li>
+                  </ul>
+                  <div class="card-body">
+                      <div class="row align-items-center">
+                          <div class="col-sm-6">
+                              <p class="card-text">${{item.price}}</p>
+                          </div>
+                          <div class="col-sm-6 text-right">
+                              <a href="{{ url_for('listing.show', id=item.id )}}" class="card-link btn btn-primary">View</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        {% endfor %}
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

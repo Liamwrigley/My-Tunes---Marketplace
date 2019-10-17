@@ -15,6 +15,14 @@ bp = Blueprint('listing', __name__, url_prefix='/listing')
 
 #-------------------------------------------------------------------
 
+# TEMPORARY ENDPOINT FOR QUOI
+#-----/resutls-----
+@bp.route('/results')
+def results():
+  listing = Listing.query.filter_by(available=True).all()
+  return render_template('listings/results.html', listing=listing)
+#-----/resutls-----END
+
 #-----/show/id-----
 #create a page that will show the details fo the destination
 @bp.route('/<int:id>')
@@ -22,7 +30,7 @@ def show(id):
   listing = Listing.query.filter_by(id=id).first()
   # cform = CommentForm()
   user = User.query.filter_by(id=listing.owner_id).first()
-  return render_template('listings/show.html', listing=listing, user=user) #, form=cfor
+  return render_template('listings/show.html', listing=listing, user=user)
 #-----/show/id-----END
 
 #-----/my_listings-----

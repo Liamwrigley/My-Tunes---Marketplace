@@ -6,3 +6,5 @@
 .vscode/
 
 marketplace/static/listing_images/
+
+.DS_Store

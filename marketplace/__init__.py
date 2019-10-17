@@ -29,8 +29,8 @@ def create_app():
     login_manager.init_app(app)
 
     #create a user loader function takes userid and returns User
-    #from .models import User  # importing here to avoid circular references
-    from .models import User
+    #from .models import User, Listing  # importing here to avoid circular references
+    from .models import User, Listing
     @login_manager.user_loader
     def load_user(user_id):
        return User.query.get(int(user_id))
@@ -39,6 +39,11 @@ def create_app():
     @app.errorhandler(404)
     def not_found(e):
         return render_template("404.html")
+
+    @app.context_processor
+    def get_genres():
+        genres = Listing.query.with_entities(Listing.genre).distinct()
+        return dict(nav_genres=genres)
 
     #importing views module here to avoid circular references
     # a commonly used practice.

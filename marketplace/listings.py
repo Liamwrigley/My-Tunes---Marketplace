@@ -15,6 +15,14 @@ bp = Blueprint('listing', __name__, url_prefix='/listing')
 
 #-------------------------------------------------------------------
 
+# TEMPORARY ENDPOINT FOR QUOI
+#-----/resutls-----
+@bp.route('/results')
+def results():
+  listing = Listing.query.filter_by(available=True).all()
+  return render_template('listings/results.html', listing=listing)
+#-----/resutls-----END
+
 #-----/show/id-----
 #create a page that will show the details fo the destination
 @bp.route('/<int:id>')
@@ -22,7 +30,7 @@ def show(id):
   listing = Listing.query.filter_by(id=id).first()
   # cform = CommentForm()
   user = User.query.filter_by(id=listing.owner_id).first()
-  return render_template('listings/show.html', listing=listing, user=user) #, form=cfor
+  return render_template('listings/show.html', listing=listing, user=user)
 #-----/show/id-----END
 
 #-----/my_listings-----
@@ -30,7 +38,11 @@ def show(id):
 @bp.route('/my_listings')
 @login_required   #decorator between the route and view function
 def my_listings():
-  listing = Listing.query.filter_by(owner_id=current_user.id).all()
+  if (request.args.get('search')):
+    search = request.args.get('search')
+    listing = Listing.query.filter(Listing.owner_id==current_user.id, Listing.name.like("%" + search + "%")).all()
+  else:
+    listing = Listing.query.filter_by(owner_id=current_user.id).all()
   return render_template('listings/currently-listed.html', listing=listing)
 #-----/my_listings-----END
 
@@ -119,6 +131,31 @@ def edit(id):
 
   return render_template('listings/create.html', form=listing_form, heading='Edit Listing')
 #-----/edit/id-----END
+
+#-----/delete/id-----
+@bp.route('/delete/<int:id>', methods = ['GET', 'POST'])
+@login_required   #decorator between the route and view function
+def delete(id):
+  listing = Listing.query.filter_by(id=id).first()
+  print(listing)
+  #check if current user is poster of listing
+  if (current_user.id == listing.owner_id):
+    # delete from db
+    db.session.delete(listing)
+    db.session.commit()
+
+    flash('Successfully removed listing', 'success')
+
+    #redirect to personal listings
+    return redirect(url_for('listing.my_listings'))
+  else:
+    flash('Could not remove listings', 'danger')
+    return redirect(url_for('listing.my_listings'))
+
+  listing = Listing.query.filter_by(owner_id=current_user.id).all()
+  return render_template('listings/currently-listed.html', listing=listing)
+#-----/delete/id-----END
+
 
 # @bp.route('/<destination>/comment', methods = ['GET', 'POST'])
 # @login_required

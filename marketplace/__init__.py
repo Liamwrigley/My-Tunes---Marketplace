@@ -1,3 +1,4 @@
+import os
 #import flask - from the package import class
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
@@ -14,7 +15,7 @@ def create_app():
     app.debug=True
     app.secret_key='supersecretkey'
     #set the app configuration data
-    app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///marketplace.sqlite'
+    app.config['SQLALCHEMY_DATABASE_URI']= os.environ['DATABSE_URL']
     #initialize db with flask app
     db.init_app(app)
 

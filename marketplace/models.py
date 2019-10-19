@@ -35,6 +35,8 @@ class Listing(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     owner = db.relationship('User', foreign_keys=[owner_id])
 
+    bids = db.relationship('Bid', backref='listings')
+
     # ... Create the Comments db.relationship
 	  # relation to call destination.comments and comment.destination
     #comments = db.relationship('Comment', backref='destination')

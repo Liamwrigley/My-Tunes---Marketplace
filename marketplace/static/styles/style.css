@@ -7,10 +7,15 @@ p, h4 {
 }
 
 .jumbotron-fluid.hero-area {
+    background: url('https://picsum.photos/1920/600/');
     background-size: cover !important;
     background-position-y: 30% !important;
     justify-content: center;
     height: 600px;
+}
+
+.jumbotron-fluid.hero-area .transparent {
+    background-color: transparent;
 }
 
 .featured-badge {

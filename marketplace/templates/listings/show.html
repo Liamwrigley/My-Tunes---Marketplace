@@ -22,13 +22,17 @@
           <div class="card-header">
               <div class="row">
                   <div class="col-md-10">
-                      <h1 class="my-2">{{listing.name}}</h1>
-                      <figcaption class="figure-caption">Created at {{listing.created_at}}</figcaption>
+                      <h1 class="my-2">{{listing.name}} - {{listing.album}}</h1>
+                      <figcaption class="figure-caption">Created at {{listing.created_at|datetimeformat}}</figcaption>
                   </div>
                   <div class="col-md-2 justify-content-end">
                         <div class="btn-group btn-group-sm" role="group">
-                            {% if current_user.id == listing.owner_id %}
+                            {% if current_user.id == listing.owner_id and listing.available %}
                                 <a href="{{ url_for('listing.edit', id=listing.id )}}" type="button" class="btn btn-info btn-sm">Edit Listing</a>
+                            {% else %}
+                                {% if current_user.id == listing.owner_id %}
+                                    <button href="{{ url_for('listing.edit', id=listing.id )}}" type="button" class="btn btn-info btn-sm" disabled>Edit Listing</button>
+                                {% endif %}
                             {% endif %}
                             <!-- <button onclick="goBack()" type="button" class="btn btn-secondary btn-sm">Back</button> -->
                       </div>
@@ -47,8 +51,11 @@
                         <h4>Details</h4>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><span><i class="fas fa-portrait"></i> {{listing.artist}}</span></li>
+                            <li class="list-group-item"><span><i class="fas fa-portrait"></i> {{listing.album}}</span></li>
+                            <li class="list-group-item"><span><i class="fas fa-portrait"></i> {{listing.release_year}}</span></li>
                             <li class="list-group-item"><i class="fas fa-compact-disc"></i> {{listing.genre}}</li>
-                            <li class="list-group-item">{{listing.description}}</li>
+                            <li class="list-group-item">Condition:<p>{{listing.condition}}</p></li>
+                            <li class="list-group-item">Description:<p>{{listing.description}}</p></li>
                         </ul>
                     </div>
                 </div>
@@ -69,7 +76,11 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
+                                        {% if listing.available %}
                                         <a href="{{ url_for('listing.makebid', id=listing.id )}}" type="button" class="btn btn-primary btn-block">Bid</a>
+                                        {% else %}
+                                        <button href="{{ url_for('listing.makebid', id=listing.id )}}" type="button" class="btn btn-primary btn-block" disabled>sold</button>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </li>
@@ -80,8 +91,8 @@
                     <div class="card-body pl-0">
                       <h4 class="mt-2">Seller</h4>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><i class="fas fa-user"></i> {{user.name}}</li>
-                            <li class="list-group-item"><i class="fas fa-envelope"></i> {{user.emailid}}</li>
+                            <li class="list-group-item"><i class="fas fa-user"></i> {{listing.owner.name}}</li>
+                            <li class="list-group-item"><i class="fas fa-envelope"></i> {{listing.owner.emailid}}</li>
                         </ul>
                     </div>
                   </div>

@@ -16,12 +16,10 @@ Create a functioning frontend and backend for a marketplace selling items of our
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install all dependencies.
 
+Navigate to /IAB207-ASS.3 and run:
+
 ```bash
-pip install flask
-pip install flask_bootstrap
-pip install flask_sqlalchemy
-pip install flask_login
-pip install flask_wtf
+pip install -r requirements.txt
 ```
 
 ## Running Application

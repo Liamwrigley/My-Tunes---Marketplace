@@ -1,9 +1,11 @@
 import os
+import datetime
 #import flask - from the package import class
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from .util.filters import datetimeformat, excerpt
 
 db=SQLAlchemy()
 
@@ -33,6 +35,7 @@ def create_app():
     #create a user loader function takes userid and returns User
     #from .models import User, Listing  # importing here to avoid circular references
     from .models import User, Listing
+    from flask_login import current_user
     @login_manager.user_loader
     def load_user(user_id):
        return User.query.get(int(user_id))
@@ -57,5 +60,8 @@ def create_app():
 
     from .listings import bp
     app.register_blueprint(bp)
+
+    app.jinja_env.filters['datetimeformat'] = datetimeformat
+    app.jinja_env.filters['excerpt'] = excerpt
 
     return app

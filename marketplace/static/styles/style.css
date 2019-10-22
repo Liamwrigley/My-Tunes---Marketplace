@@ -56,3 +56,9 @@ left: 20px;
     bottom: 18px;
     right: 20px;
 }
+
+
+/* Not sure why the grid on homepage isnt working but fixed with this */
+.col-lg {
+    display: grid;
+}

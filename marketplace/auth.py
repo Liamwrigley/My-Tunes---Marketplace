@@ -43,6 +43,7 @@ def register():
         user_name = register.user_name.data
         pw = register.password.data
         email = register.email_id.data
+        phone = register.phone.data
 
         #check if username already exists within DB
         user_check = User.query.filter_by(name=user_name).first()
@@ -60,7 +61,7 @@ def register():
 
         #if user_check does not return a user - insert data into DB
         pw_hash = generate_password_hash(pw)
-        new_user = User(name=user_name, password_hash=pw_hash, emailid=email)
+        new_user = User(name=user_name, password_hash=pw_hash, emailid=email, phone=phone)
         db.session.add(new_user)
         db.session.commit()
         #once commited to DB - redirect to login

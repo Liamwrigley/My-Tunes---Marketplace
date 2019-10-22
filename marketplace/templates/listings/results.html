@@ -1,43 +1,78 @@
-{% extends 'base.html' %}          
+{% extends 'base.html' %} {% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <div class="input-group mb-3">
+                    <div class="col-auto my-1">
+                        <label class="mr-sm-2" for="inlineFormCustomSelect">Year</label>
+                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+              <option selected>Choose...</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+                    </div>
+                </div>
+            </li>
 
-{% block content %}
-<div class="container">
-  <div>
-    <p>PLEASE ADD A SEARCH MODULE HERE THAT SITS ABOVE RESULTS</p>
-  </div>
-  <div id="home-listings" class="my-5 container">
-    {% if listing %}
-      {% for row in listing|batch(3) %}
-        <div class="row mb-5">
+            <li class="nav-item active">
+                <div class="input-group mb-3">
+                    <div class="col-auto my-1">
+                        <label class="mr-sm-2" for="inlineFormCustomSelect">Genre</label>
+                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+              <option selected>Choose...</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <div class="col-auto my-1">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</nav>
+
+
+<div id="home-listings" class="my-5 container">
+    {% if listing %} {% for row in listing|batch(3) %}
+    <div class="row mb-5">
         {% for item in row %}
-          <div class="col-lg">
-              <div class="card text-white bg-dark">
-                  <img src="{{item.image}}" class="img-fluid d-block w-100">
-                  <div class="card-body">
-                      <h5 class="card-title">{{item.name}}</h5>
-                      <p class="card-text">{{item.description}}</p>
-                  </div>
-                  <ul class="list-group list-group-flush">
-                      <li class="list-group-item text-white bg-dark"><i class="fas fa-portrait"></i> {{item.artist}}</li>
-                      <li class="list-group-item text-white bg-dark"><i class="fas fa-compact-disc"></i> {{item.genre}}</li>
-                      <li class="list-group-item text-white bg-dark"><i class="fas fa-calendar-alt"></i> {{item.created_at|datetimeformat}}</li>
-                  </ul>
-                  <div class="card-body">
-                      <div class="row align-items-center">
-                          <div class="col-sm-6">
-                              <p class="card-text">${{item.price}}</p>
-                          </div>
-                          <div class="col-sm-6 text-right">
-                              <a href="{{ url_for('listing.show', id=item.id )}}" class="card-link btn btn-primary">View</a>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-        {% endfor %}
+        <div class="col-lg">
+            <div class="card text-white bg-dark">
+                <img src="{{item.image}}" class="img-fluid d-block w-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{item.name}}</h5>
+                    <p class="card-text">{{item.description}}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item text-white bg-dark"><i class="fas fa-portrait"></i> {{item.artist}}</li>
+                    <li class="list-group-item text-white bg-dark"><i class="fas fa-compact-disc"></i> {{item.genre}}</li>
+                    <li class="list-group-item text-white bg-dark"><i class="fas fa-calendar-alt"></i> {{item.created_at|datetimeformat}}
+                    </li>
+                </ul>
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-sm-6">
+                            <p class="card-text">${{item.price}}</p>
+                        </div>
+                        <div class="col-sm-6 text-right">
+                            <a href="{{ url_for('listing.show', id=item.id )}}" class="card-link btn btn-primary">View</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      {% endfor %}
-    {% endif %}
-  </div>
+        {% endfor %}
+    </div>
+    {% endfor %} {% endif %}
+</div>
 </div>
 {% endblock %}

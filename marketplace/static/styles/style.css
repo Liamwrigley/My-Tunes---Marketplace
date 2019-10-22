@@ -1,8 +1,9 @@
 body {
-    background-color: #272727;
+    background-color: #504f4f;
 }
 
-p, h4 {
+p,
+h4 {
     color: white;
 }
 
@@ -37,18 +38,17 @@ p, h4 {
     height: 100%;
     width: 100%;
 }
-.listing-button-area {
 
-}
+.listing-button-area {}
 
 a.listing-actions {
     /* color: #000; */
 }
 
 .listing-badge-genre {
-position: absolute;
-top: 5px;
-left: 20px;
+    position: absolute;
+    top: 5px;
+    left: 20px;
 }
 
 .listing-badge-artist {

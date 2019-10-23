@@ -41,17 +41,19 @@
             <div class="row no-gutters">
                 <div class="col-md-8">
                     <h3 class="featured-badge"><span class="badge badge-secondary">NEW</span></h3>
-                    <img src="{{listing.image}}" class="img-fluid d-block w-100" alt={{listing.name}}>
+                    <img src="{{listing.image}}" class="img-fluid d-block" alt={{listing.name}}>
                 </div>
                 <div class="col-md-4">
                     <div class="card-body">
-                        <h5 class="card-title">{{listing.name}} - {{listing.album}}</h5>
+                        <h5 class="card-title">{{listing.name}}</h5>
+                        <p class="card-text">{{listing.condition|excerpt}}</p>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item text-white bg-dark"><span><i class="fas fa-portrait"></i> {{listing.artist}}</li>
-                        <li class="list-group-item text-white bg-dark"><span><i class="fas fa-compact-disc"></i> {{listing.genre}}</li>
-                        <li class="list-group-item text-white bg-dark"><span><i class="fas fa-calendar-alt"></i> {{listing.release_year}}</li>
-                        <li class="list-group-item text-white bg-dark">Description:<p>{{listing.description|excerpt}}</p></li>
+                        <li class="list-group-item text-white bg-dark"><span><i class="fas fa-portrait"></i> {{listing.artist}}</span></li>
+                        <li class="list-group-item text-white bg-dark"><span><i class="fas fa-compact-disc"></i> {{listing.album}}</span></li>
+                        <li class="list-group-item text-white bg-dark"><span><i class="fas fa-calendar-alt"></i> {{listing.release_year}}</span></li>
+                        <li class="list-group-item text-white bg-dark"><i class="fas fa-icons"></i> {{listing.genre}}</li>
+                        <li class="list-group-item text-white bg-dark">{{listing.description|excerpt}}</li>
                     </ul>
                     <div class="card-body">
                         <div class="row align-items-center">
@@ -84,12 +86,13 @@
                     <img src="{{item.image}}" class="img-fluid d-block w-100">
                     <div class="card-body">
                         <h5 class="card-title">{{item.name}}</h5>
-                        <p class="card-text">{{item.description|excerpt}}</p>
+                        <p class="card-text">{{item.condition|excerpt}}</p>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item text-white bg-dark"><i class="fas fa-portrait"></i> {{item.artist}}</li>
-                        <li class="list-group-item text-white bg-dark"><i class="fas fa-compact-disc"></i> {{item.genre}}</li>
-                        <li class="list-group-item text-white bg-dark"><i class="fas fa-calendar-alt"></i> {{item.release_year}}</li>
+                            <li class="list-group-item text-white bg-dark"><i class="fas fa-portrait"></i> {{item.artist}}</li>
+                            <li class="list-group-item text-white bg-dark"><i class="fas fa-compact-disc"></i> {{item.album}}</li>
+                            <li class="list-group-item text-white bg-dark"><i class="fas fa-calendar-alt"></i> {{item.release_year}}</li>
+                            <li class="list-group-item text-white bg-dark"><i class="fas fa-icons"></i> {{item.genre}}</li>
                     </ul>
                     <div class="card-body">
                         <div class="row align-items-center">

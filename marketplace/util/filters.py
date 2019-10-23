@@ -6,8 +6,8 @@ def datetimeformat(value, format='%I:%M - %a %d %b %Y'):
 
 def excerpt(value):
   #creates an excerpt from description
-  if len(value) > 115:
-    return value[0:115]+'...'
+  if len(value) > 55:
+    return value[0:55]+'...'
   else:
     return value
     

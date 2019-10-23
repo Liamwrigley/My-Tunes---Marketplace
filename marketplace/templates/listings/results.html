@@ -2,18 +2,18 @@
 
 <!-- RESULTS SEARCH AREA -->
 <div class="container mt-4 pt-4">
-    <form action="">
+    <form action="/listing/results">
         <div class="form-row my-1 align-items-center">
             <div class="col-md-2">
-                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                    <option vaule="" selected>Year</option>
+                <select name="year" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                    <option value="" selected>Year</option>
                     {% for year in nav_years %}
-                    <option value="{{year}}">{{year.release_year}}</option>
+                    <option value="{{year.release_year}}">{{year.release_year}}</option>
                     {% endfor %}
                 </select>
             </div>
             <div class="col-md-4">
-                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                <select name="genre" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                     <option value="" selected>Genre</option>
                     {% for genre in nav_genres %}
                         <option value="{{genre.genre}}">{{genre.genre}}</option>
@@ -21,7 +21,7 @@
                 </select>
             </div>
             <div class="col-md-4">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <input name="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             </div>
             <div class="col-md-2">
                 <button type="submit" class="btn btn-primary btn-block">Submit</button>
@@ -41,13 +41,13 @@
                 <img src="{{item.image}}" class="img-fluid d-block w-100">
                 <div class="card-body">
                     <h5 class="card-title">{{item.name}}</h5>
-                    <p class="card-text">{{item.description|excerpt}}</p>
+                    <p class="card-text">{{item.condition|excerpt}}</p>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item text-white bg-dark"><i class="fas fa-portrait"></i> {{item.artist}}</li>
-                    <li class="list-group-item text-white bg-dark"><i class="fas fa-compact-disc"></i> {{item.genre}}</li>
-                    <li class="list-group-item text-white bg-dark"><i class="fas fa-calendar-alt"></i> {{item.release_year}}
-                    </li>
+                    <li class="list-group-item text-white bg-dark"><i class="fas fa-compact-disc"></i> {{item.album}}</li>
+                    <li class="list-group-item text-white bg-dark"><i class="fas fa-calendar-alt"></i> {{item.release_year}}</li>
+                    <li class="list-group-item text-white bg-dark"><i class="fas fa-icons"></i> {{item.genre}}</li>
                 </ul>
                 <div class="card-body">
                     <div class="row align-items-center">
@@ -66,7 +66,7 @@
     {% endfor %}
     {% else %}
     <div class="row mb-5">
-        <h2>Sorry, no listings match that criteria</h2>
+        <h2 class="px-3">Sorry, no listings match that criteria...</h2>
     </div>
     {% endif %}
 </div>

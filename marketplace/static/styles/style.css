@@ -70,9 +70,21 @@ form input[type="submit"] {
     color: #fff;
 }
 
+#featured-carousel .img-fluid.d-block {
+    min-width: 100%;
+    height: 483px;
+    object-fit: cover;
+}
+
 .img-fluid.d-block.w-100 {
     width: 100%;
     height: auto;
     max-height: 300px;
+    object-fit: cover;
+}
+
+img.single-listing-img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }

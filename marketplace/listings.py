@@ -1,4 +1,4 @@
-import os
+import os, re
 from flask import (
     Blueprint, flash, render_template, request, url_for, redirect
 )
@@ -18,21 +18,23 @@ bp = Blueprint('listing', __name__, url_prefix='/listing')
 #-----/results-----
 @bp.route('/results')
 def results():
-  # This works from the search bar from home page
-  if 'search' in request.args:
-    search = request.args.get('search')
-    listing = Listing.query.filter(Listing.available==True, Listing.name.ilike("%" + search + "%")).all()
-
-  # This works from the nav bar dropdown
-  if 'genre' in request.args:
-    genreQuery = request.args.get('genre')
-    listing = Listing.query.filter(Listing.available==True, Listing.genre==genreQuery).all()
-
+  # Open query session to chain filters together based on what arguments are in the form
+  # Initially sort by available and at the end sort it by name ascending
+  query = db.session.query(Listing)
+  query = query.filter(Listing.available==True)
+  for q in request.args:
+    if (q == 'genre' and request.args.get('genre') != ''):
+      query = query.filter(Listing.genre==request.args.get('genre'))
+    if (q == 'year' and request.args.get('year') != ''):
+      query = query.filter(Listing.release_year==request.args.get('year'))
+    if (q == 'search' and request.args.get('search') != ''):
+      query = query.filter(Listing.name.ilike("%" + request.args.get('search') + "%"))
+    listing = query.order_by(Listing.name.asc()).all()
   return render_template('listings/results.html', listing=listing)
-#-----/resutls-----END
+#-----/results-----END
 
 #-----/show/id-----
-#create a page that will show the details for the destination
+# Shows a single listing
 @bp.route('/<int:id>')
 def show(id):
   listing = Listing.query.filter_by(id=id).first()
@@ -40,34 +42,36 @@ def show(id):
 #-----/show/id-----END
 
 #-----/my_listings-----
-#Shows all listings belonging to current user
+# Shows all listings belonging to current user
 @bp.route('/my_listings')
-@login_required   #decorator between the route and view function
+@login_required
 def my_listings():
   if (request.args.get('search')):
     search = request.args.get('search')
-    listing = Listing.query.filter(Listing.owner_id==current_user.id, Listing.available==True, Listing.name.like("%" + search + "%")).all()
+    listing = Listing.query.filter(Listing.owner_id==current_user.id, Listing.available==True, Listing.name.like("%" + search + "%")).order_by(Listing.name.asc()).all()
   else:
-    listing = Listing.query.filter(Listing.owner_id==current_user.id, Listing.available==True).all()
+    listing = Listing.query.filter(Listing.owner_id==current_user.id, Listing.available==True).order_by(Listing.name.asc()).all()
   return render_template('listings/currently-listed.html', listing=listing)
 #-----/my_listings-----END
 
 #-----/my_previous-----
-#Shows all listings belonging to current user
+# Shows all sold listings belonging to current user
 @bp.route('/my_previous')
-@login_required   #decorator between the route and view function
+@login_required
 def my_previous():
   if (request.args.get('search')):
     search = request.args.get('search')
-    listing = Listing.query.filter(Listing.owner_id==current_user.id, Listing.name.like("%" + search + "%")).all()
+    listing = Listing.query.filter(Listing.owner_id==current_user.id, Listing.name.like("%" + search + "%")).order_by(Listing.name.asc()).all()
   else:
-    listing = Listing.query.filter(Listing.owner_id==current_user.id, Listing.available==False).all()
+    listing = Listing.query.filter(Listing.owner_id==current_user.id, Listing.available==False).order_by(Listing.name.asc()).all()
   return render_template('listings/previous-listed.html', listing=listing)
 #-----/my_listings-----END
 
 #-----/bid-----
+# Endpoint to bid on an item
+# Adds bit details to bid DB
 @bp.route('/bid/<int:id>', methods = ['GET', 'POST'])
-@login_required   #decorator between the route and view function
+@login_required
 def makebid(id):
   listing = Listing.query.filter_by(id=id).first()
   already_bid = Bid.query.filter_by(bidder_id=current_user.id, listing_id=id).first()
@@ -90,8 +94,10 @@ def makebid(id):
 
 
 #-----/create-----
+# Endpoint for listing creation
+# Adds listing details to DB and saves image to local dir
 @bp.route('/create', methods = ['GET', 'POST'])
-@login_required   #decorator between the route and view function
+@login_required
 def create():
   listing_form = ListingForm()
   if listing_form.validate_on_submit():
@@ -126,14 +132,15 @@ def create():
 #-----/create-----END
 
 #-----/edit/id-----
+# Shows page to edit single listing
 @bp.route('/edit/<int:id>', methods = ['GET', 'POST'])
-@login_required   #decorator between the route and view function
+@login_required
 def edit(id):
   listing = Listing.query.filter_by(id=id).first()
 
   #check if current user is poster of listing
   if (current_user.id == listing.owner_id):
-    #check if listing is avail - stops from entering URL when btn disabled
+    #check if listing is avail - stops from entering page from URL
     if (listing.available):
       listing_form = ListingForm()
       if listing_form.validate_on_submit():
@@ -165,8 +172,10 @@ def edit(id):
 #-----/edit/id-----END
 
 #-----/delete/id-----
+# Endpoint to delete a listing
+# Will delete a listing from the DB
 @bp.route('/delete/<int:id>', methods = ['GET', 'POST'])
-@login_required   #decorator between the route and view function
+@login_required
 def delete(id):
   listing = Listing.query.filter_by(id=id).first()
   print(listing)
@@ -189,6 +198,9 @@ def delete(id):
 #-----/delete/id-----END
 
 #-----/sell/listing_id-user_id-----
+# Endpoint to select a buyer for a listing
+# Takes listing ID and user ID as params
+# Sets listing to unavailable and adds details to sales DB
 @bp.route('/sell/<int:listingid>-<int:userid>', methods = ['GET', 'POST'])
 @login_required   #decorator between the route and view function
 def sell(listingid, userid):

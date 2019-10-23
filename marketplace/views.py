@@ -7,5 +7,5 @@ bp = Blueprint('main', __name__, template_folder="templates")
 
 @bp.route('/', endpoint="home")
 def home():
-    listing = Listing.query.filter_by(available=True).all()
+    listing = Listing.query.filter(Listing.available==True).order_by(Listing.name.asc()).all()
     return render_template('index.html', listing=listing)

@@ -57,8 +57,8 @@ def create_app():
 
     @app.context_processor
     def get_genres():
-        genres = Listing.query.with_entities(Listing.genre).distinct()
-        years = Listing.query.with_entities(Listing.release_year).distinct()
+        genres = Listing.query.with_entities(Listing.genre).filter(Listing.available==True).order_by(Listing.genre.desc()).distinct()
+        years = Listing.query.with_entities(Listing.release_year).filter(Listing.available==True).order_by(Listing.release_year.desc()).distinct()
         return dict(nav_genres=genres, nav_years=years)
 
     #importing views module here to avoid circular references

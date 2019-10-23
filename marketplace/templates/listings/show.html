@@ -23,7 +23,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-md-10">
-                    <h1 class="my-2">{{listing.name}} - {{listing.album}}</h1>
+                    <h1 class="my-2">{{listing.name}}</h1>
                     <figcaption class="figure-caption">Created at {{listing.created_at|datetimeformat}}</figcaption>
                 </div>
                 <div class="col-md-2 justify-content-end">
@@ -40,7 +40,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <span class="badge badge-light listing-badge-genre">{{listing.genre}}</span>
-                    <img src="{{listing.image}}" class="img-fluid" alt="Listing Image">
+                    <img src="{{listing.image}}" class="img-fluid single-listing-img" alt="Listing Image">
                     <span class="badge badge-light listing-badge-artist">{{listing.artist}}</span>
                 </div>
                 <div class="col-md-6">

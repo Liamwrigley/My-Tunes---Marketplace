@@ -30,7 +30,7 @@
                             <td>{{bids.bid_time|datetimeformat}}</td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="actions">
-                                    <a href="{{ url_for('listing.sell', listingid=bids.listing.id, userid=bids.bidder.id )}}" class="btn btn-primary" data-toggle="tooltip" title="Accept"><i class="fas fa-user-check"></i></a>
+                                    <a href="{{ url_for('listing.sell', listingid=bids.listing.id, userid=bids.bidder.id )}}" class="btn btn-transparent" data-toggle="tooltip" title="Accept"><i class="fas fa-user-check"></i></a>
                                     <!-- <a href="{{ url_for('listing.delete', id=i.id )}}" class="btn btn-transparent" data-toggle="tooltip" title="Reject"><i class="fas fa-user-times"></i></a> -->
                                 </div>
                             </td>
@@ -125,14 +125,14 @@
                         <td>${{i.price}}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="actions">
-                                <a href="{{ url_for('listing.edit', id=i.id )}}" class="btn btn-primary" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                <a href="{{ url_for('listing.edit', id=i.id )}}" class="btn btn-transparent" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                 <span data-toggle="modal" data-target="#bids-modal-{{i.id}}">
-                                      <button type="button" class="btn btn-primary" data-toggle="tooltip" title="Bids" data-listing={{i.id}}>
+                                      <button type="button" class="btn btn-transparent" data-toggle="tooltip" title="Bids" data-listing={{i.id}}>
                                           <i class="fas fa-user-tag"></i>
                                       </button>
                                   </span>
                                 <span data-toggle="modal" data-target="#delete-modal-{{i.id}}">
-                                        <button type="button" class="btn btn-primary" data-toggle="tooltip" title="Delete" data-listing={{i.id}}>
+                                        <button type="button" class="btn btn-transparent" data-toggle="tooltip" title="Delete" data-listing={{i.id}}>
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </span>

@@ -15,7 +15,6 @@ bp = Blueprint('listing', __name__, url_prefix='/listing')
 
 #-------------------------------------------------------------------
 
-# TEMPORARY ENDPOINT FOR QUOI
 #-----/results-----
 @bp.route('/results')
 def results():

@@ -50,10 +50,10 @@ def create_app():
     def load_user(user_id):
        return User.query.get(int(user_id))
 
-    #Error handling 404
-    @app.errorhandler(404)
-    def not_found(e):
-        return render_template("404.html")
+    # Error handing - passes through error code and template forms based on code
+    @app.errorhandler(Exception)
+    def handle_error(e):
+        return render_template("error.html", error=e.code)
 
     @app.context_processor
     def get_genres():

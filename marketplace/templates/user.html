@@ -10,8 +10,6 @@
     <h4>{{heading}}</h4>
 </div>
 
-<input style="float:right;" class="btn btn-default" type="button" value="Back" onclick="window.history.back()" />
-
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %} <!-- check if there are any messages -->
   <div class="container">
@@ -32,9 +30,16 @@
 </div>
 
 <!-- When you have login form, then do show the user a link to register -->
-{% if heading|lower =='login' %}
+{% if heading|lower == 'login' %}
 <div class="col-md-4 mb-5 ml-5 text-white">
     <p>New user? <a href="{{ url_for('auth.register') }}">Click here to register</a>.</p>
+</div>
+{% endif %}
+
+<!-- When having a register form, show button to take to login -->
+{% if heading|lower == 'register' %}
+<div class="col-md-4 mb-5 ml-5 text-white">
+    <p>Already have an account? <a href="{{ url_for('auth.login') }}">Click here to login</a>.</p>
 </div>
 {% endif %}
 </div>

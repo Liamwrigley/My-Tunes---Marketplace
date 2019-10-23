@@ -1,13 +1,14 @@
 {% extends 'base.html' %} {% block content %}
+
+<!-- RESULTS NAV AREA -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
                 <div class="input-group mb-3">
                     <div class="col-auto my-1">
-                        <label class="mr-sm-2" for="inlineFormCustomSelect">Year</label>
                         <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-              <option selected>Choose...</option>
+              <option vaule="" selected>Year</option>
               <option value="1">One</option>
               <option value="2">Two</option>
               <option value="3">Three</option>
@@ -19,9 +20,8 @@
             <li class="nav-item active">
                 <div class="input-group mb-3">
                     <div class="col-auto my-1">
-                        <label class="mr-sm-2" for="inlineFormCustomSelect">Genre</label>
                         <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-              <option selected>Choose...</option>
+              <option value="" selected>Genre</option>
               <option value="1">One</option>
               <option value="2">Two</option>
               <option value="3">Three</option>
@@ -39,6 +39,7 @@
         </form>
     </div>
 </nav>
+<!-- RESULTS NAV AREA END-->
 
 
 <div id="home-listings" class="my-5 container">

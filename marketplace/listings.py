@@ -22,7 +22,7 @@ def results():
   # This works from the search bar from home page
   if 'search' in request.args:
     search = request.args.get('search')
-    listing = Listing.query.filter(Listing.available==True, Listing.name.like("%" + search + "%")).all()
+    listing = Listing.query.filter(Listing.available==True, Listing.name.ilike("%" + search + "%")).all()
 
   # This works from the nav bar dropdown
   if 'genre' in request.args:
@@ -102,8 +102,8 @@ def create():
                 album=listing_form.album.data,
                 description=listing_form.description.data,
                 condition=listing_form.condition.data,
-                image=('/tmp/' + listing_form.image.data.filename),
-                # image=('/static/listing_images/' + listing_form.image.data.filename),
+                # image=('/tmp/' + listing_form.image.data.filename),
+                image=('/static/listing_images/' + listing_form.image.data.filename),
                 price=listing_form.price.data,
                 genre=listing_form.genre.data,
                 release_year=listing_form.release_year.data,
@@ -111,8 +111,8 @@ def create():
 
     if request.method == 'POST':
       f = listing_form.image.data
-      f.save(os.path.join('/tmp/', secure_filename(f.filename)))
-      # f.save(os.path.join('marketplace/static/listing_images', secure_filename(f.filename)))
+      # f.save(os.path.join('/tmp/', secure_filename(f.filename)))
+      f.save(os.path.join('marketplace\\static\\listing_images', secure_filename(f.filename)))
 
     # push to db
     db.session.add(listing)

@@ -1,50 +1,47 @@
 {% extends 'base.html' %}
 
-  <!-- CREATE LISTING AREA -->
-  {% block content %}
-  <div class="container">
+<!-- CREATE LISTING AREA -->
+{% block content %}
+<div class="container">
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %} <!-- check if there are any messages -->
-            <div class="container">
-            <div class="row mt-3 mb-3">
-                <div class="col-md-12">
-                {% for category, message in messages %} <!--loop through the messages-->
-                <div class="alert alert-{{ category }}">{{ message }}</div> <!--display as alert-->
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
+    <!-- check if there are any messages -->
+    <div class="container">
+        <div class="row mt-3 mb-3">
+            <div class="col-md-12">
+                {% for category, message in messages %}
+                <!--loop through the messages-->
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+                <!--display as alert-->
                 {% endfor %}
             </div>
+        </div>
+    </div>
+    {% endif %} {% endwith %}
+
+    <div class="card my-5 rounded-lg bg-light">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-10">
+                    <h1 class="my-2">{{listing.name}} - {{listing.album}}</h1>
+                    <figcaption class="figure-caption">Created at {{listing.created_at|datetimeformat}}</figcaption>
+                </div>
+                <div class="col-md-2 justify-content-end">
+                    <div class="btn-group btn-group-sm" role="group">
+                        {% if current_user.id == listing.owner_id and listing.available %}
+                        <a href="{{ url_for('listing.edit', id=listing.id )}}" type="button" class="btn btn-primary">Edit Listing</a> {% else %} {% if current_user.id == listing.owner_id %}
+                        <button href="{{ url_for('listing.edit', id=listing.id )}}" type="button" class="btn btn-info btn-sm" disabled>Edit Listing</button> {% endif %} {% endif %}
+                        <!-- <button onclick="goBack()" type="button" class="btn btn-secondary btn-sm">Back</button> -->
+                    </div>
+                </div>
             </div>
         </div>
-        {% endif %}
-        {% endwith %}
-
-      <div class="card my-5 rounded-lg bg-light">
-          <div class="card-header">
-              <div class="row">
-                  <div class="col-md-10">
-                      <h1 class="my-2">{{listing.name}} - {{listing.album}}</h1>
-                      <figcaption class="figure-caption">Created at {{listing.created_at|datetimeformat}}</figcaption>
-                  </div>
-                  <div class="col-md-2 justify-content-end">
-                        <div class="btn-group btn-group-sm" role="group">
-                            {% if current_user.id == listing.owner_id and listing.available %}
-                                <a href="{{ url_for('listing.edit', id=listing.id )}}" type="button" class="btn btn-info btn-sm">Edit Listing</a>
-                            {% else %}
-                                {% if current_user.id == listing.owner_id %}
-                                    <button href="{{ url_for('listing.edit', id=listing.id )}}" type="button" class="btn btn-info btn-sm" disabled>Edit Listing</button>
-                                {% endif %}
-                            {% endif %}
-                            <!-- <button onclick="goBack()" type="button" class="btn btn-secondary btn-sm">Back</button> -->
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="card-body">
-              <div class="row">
-                  <div class="col-md-6">
-                      <span class="badge badge-light listing-badge-genre">{{listing.genre}}</span>
-                      <img src="{{listing.image}}" class="img-fluid" alt="Listing Image">
-                      <span class="badge badge-light listing-badge-artist">{{listing.artist}}</span>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="badge badge-light listing-badge-genre">{{listing.genre}}</span>
+                    <img src="{{listing.image}}" class="img-fluid" alt="Listing Image">
+                    <span class="badge badge-light listing-badge-artist">{{listing.artist}}</span>
                 </div>
                 <div class="col-md-6">
                     <div class="card-body pl-0">
@@ -54,14 +51,18 @@
                             <li class="list-group-item"><span><i class="fas fa-portrait"></i> {{listing.album}}</span></li>
                             <li class="list-group-item"><span><i class="fas fa-portrait"></i> {{listing.release_year}}</span></li>
                             <li class="list-group-item"><i class="fas fa-compact-disc"></i> {{listing.genre}}</li>
-                            <li class="list-group-item">Condition:<p>{{listing.condition}}</p></li>
-                            <li class="list-group-item">Description:<p>{{listing.description}}</p></li>
+                            <li class="list-group-item">Condition:
+                                <p>{{listing.condition}}</p>
+                            </li>
+                            <li class="list-group-item">Description:
+                                <p>{{listing.description}}</p>
+                            </li>
                         </ul>
                     </div>
                 </div>
-              </div>
-              <div class="row mt-2">
-                  <div class="col-md-6">
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
                     <div class="card-body pl-0">
                         <h4 class="mt-2">Purchase</h4>
                         <ul class="list-group list-group-flush">
@@ -77,28 +78,26 @@
                                     </div>
                                     <div class="col-md-6">
                                         {% if listing.available %}
-                                        <a href="{{ url_for('listing.makebid', id=listing.id )}}" type="button" class="btn btn-primary btn-block">Bid</a>
-                                        {% else %}
-                                        <button href="{{ url_for('listing.makebid', id=listing.id )}}" type="button" class="btn btn-primary btn-block" disabled>sold</button>
-                                        {% endif %}
+                                        <a href="{{ url_for('listing.makebid', id=listing.id )}}" type="button" class="btn btn-primary btn-block">Bid</a> {% else %}
+                                        <button href="{{ url_for('listing.makebid', id=listing.id )}}" type="button" class="btn btn-primary btn-block" disabled>sold</button> {% endif %}
                                     </div>
                                 </div>
                             </li>
                         </ul>
                     </div>
-                  </div>
-                  <div class="col-md-6">
+                </div>
+                <div class="col-md-6">
                     <div class="card-body pl-0">
-                      <h4 class="mt-2">Seller</h4>
+                        <h4 class="mt-2">Seller</h4>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><i class="fas fa-user"></i> {{listing.owner.name}}</li>
                             <li class="list-group-item"><i class="fas fa-envelope"></i> {{listing.owner.emailid}}</li>
                         </ul>
                     </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-  <!-- CREATE LISTING AREA END -->
-  {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- CREATE LISTING AREA END -->
+{% endblock %}

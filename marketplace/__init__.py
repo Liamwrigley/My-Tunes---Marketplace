@@ -2,7 +2,7 @@ import os
 import datetime
 
 # uncomment for heroku
-import psycopg2
+# import psycopg2
 
 
 #import flask - from the package import class
@@ -23,10 +23,10 @@ def create_app():
     app.secret_key='supersecretkey'
     #set the app configuration data
 
-    # app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///marketplace.sqlite'
+    app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///marketplace.sqlite'
 
     # uncomment for Heroku
-    app.config['SQLALCHEMY_DATABASE_URI']= os.environ['DATABASE_URL']
+    # app.config['SQLALCHEMY_DATABASE_URI']= os.environ['DATABASE_URL']
     # conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
     #initialize db with flask app

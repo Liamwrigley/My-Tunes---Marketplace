@@ -16,17 +16,21 @@ Create a functioning frontend and backend for a marketplace selling items of our
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install all dependencies.
 
-Navigate to /IAB207-ASS.3 and run:
+Navigate to /IAB207-ASS.3 (containing *requirements.txt*) and run:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Running Application
-Setup sql DB with containing *.sql* file
+## Creating SQLite Database
+To initialise DB, navigate to /IAB207-ASS.3 (contaning *reinit.py*) and run:
+```bash
+python reinitby.py
+```
 
+## Running Application
 Navigate to folder containing *app.py*
-```python
+```bash
 flask run
 ```
 

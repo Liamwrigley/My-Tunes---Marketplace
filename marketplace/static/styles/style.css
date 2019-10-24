@@ -62,7 +62,27 @@ a.listing-actions {
 
 .col-lg {
     display: grid;
-    max-width: 33.33%;
+}
+
+@media all and (min-width: 1100px) {
+    .col-lg {
+        max-width: 33.33%;
+        margin: 1em 0;
+    }
+}
+
+@media all and (max-width: 1099px) {
+    .col-lg {
+        margin: 1em 0;
+    }
+}
+
+@media all and (max-width: 600px) {
+    #featured-carousel .img-fluid.d-block {
+        min-width: 100%;
+        height: auto !important;
+        object-fit: cover;
+    }
 }
 
 form input[type="submit"] {

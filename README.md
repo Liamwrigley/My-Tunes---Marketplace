@@ -4,6 +4,10 @@ IAB207 Rapid Web Development - Semester 2 - 2019 - QUT
 
 Create a functioning frontend and backend for a marketplace selling items of our choosings.
 
+Here we have a marketplace *My Tunes* for buying and selling music. Users can create unique login details to start selling their items and buying from others on the marketplace.
+
+*My Tunes* does not integrate any form of payment - this is designed to be left up to the seller and buyer through either phone or email. The buyer can then select a user they wish the sell the item to and the item will be made no longer available to bid on.
+
 ### Technologies
  - Python
  - Flask
@@ -37,9 +41,9 @@ flask run
 ## Collaborators
 This is a group QUT project collaborated on by 3 members:
 
- - [Jack Stanyon](https://github.com/stanyonja/)
- - [Liam Wrigley](https://github.com/liamwrigley/)
- - [Quoi McGowan](https://github.com/quoim)
+ - [Jack Stanyon](https://github.com/stanyonja/) - Styling fixes
+ - [Liam Wrigley](https://github.com/liamwrigley/) - Backend / DB / Design / Styling
+ - [Quoi McGowan](https://github.com/quoim) - Styling Fixes
 
 
 ## License

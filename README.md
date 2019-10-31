@@ -13,8 +13,10 @@ Here we have a marketplace *My Tunes* for buying and selling music. Users can cr
 - All passwords are hashed and stored as a hashkey in the database
 - Working search fields which are populated from the available data in the database
  
-### Enhancements
+### Enhancements / Todo
 - Current images are stored in local static folder - will need to migrate to file host so that images can be saved and served on heroku deployment
+  - Would also like the be able to fomat the images on save - potentially using tinypng api
+- Create an admin dashboard to see all users and listings
 - Create development and live environments for increased ease of heroku builds
 - Set up tests and use Travis CI for build checking before deployments
 - Add ability to set the desired bid price rather than it being set to the desired sell price

@@ -12,7 +12,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_wtf import CsrfProtect
 from .util.filters import datetimeformat, excerpt
-from .config import SQLALCHEMY_DATABASE_URI
+from .config import DATABASE_URL
 db=SQLAlchemy()
 
 #create a function that creates a web application
@@ -28,7 +28,7 @@ def create_app():
     csrf.init_app(app)
     #set the app configuration data
 
-    app.config['SQLALCHEMY_DATABASE_URI']=SQLALCHEMY_DATABASE_URI
+    app.config['SQLALCHEMY_DATABASE_URI']=DATABASE_URL
 
     #initialize db with flask app
     db.init_app(app)

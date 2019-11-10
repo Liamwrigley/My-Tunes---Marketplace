@@ -1,9 +1,9 @@
-import os, re
+import os, re, boto3, botocore
 from flask import (
     Blueprint, flash, render_template, request, url_for, redirect
 )
 from .models import Listing,User,Bid,Sale
-from .forms import ListingForm
+from .forms import ListingForm, EditForm
 from . import db
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
@@ -11,6 +11,32 @@ import app
 
 #create a blueprint
 bp = Blueprint('listing', __name__, url_prefix='/listing')
+
+from .config import S3_KEY, S3_SECRET, S3_BUCKET, S3_LOCATION
+
+s3 = boto3.client(
+  "s3",
+  aws_access_key_id=S3_KEY,
+  aws_secret_access_key=S3_SECRET
+)
+
+@bp.route('/file_upload')
+def upload_file(file, bucket_name, acl="public-read"):
+  try:
+    s3.upload_fileobj(
+      file,
+      bucket_name,
+      file.filename,
+      ExtraArgs={
+        "ACL": acl,
+        "ContentType": file.content_type
+      }
+    )
+  except Exception as e:
+    print("Something happened: ", e)
+    return e
+
+  return "{}{}".format(S3_LOCATION, file.filename)
 
 
 #-------------------------------------------------------------------
@@ -69,7 +95,7 @@ def my_previous():
 
 #-----/bid-----
 # Endpoint to bid on an item
-# Adds bit details to bid DB
+# Adds bid details to bid DB
 @bp.route('/bid/<int:id>', methods = ['GET', 'POST'])
 @login_required
 def makebid(id):
@@ -102,23 +128,26 @@ def create():
   listing_form = ListingForm()
   if listing_form.validate_on_submit():
     # on successful validation add data
+
+    if request.method == 'POST':
+      f = listing_form.image.data
+      output = upload_file(f, S3_BUCKET)
+
     listing = Listing(name=listing_form.name.data,
                 artist=listing_form.artist.data,
                 album=listing_form.album.data,
                 description=listing_form.description.data,
                 condition=listing_form.condition.data,
-                # image=('/tmp/' + listing_form.image.data.filename),
-                image=('/static/listing_images/' + listing_form.image.data.filename),
+                image=(output), # image path from img upload function
                 price=listing_form.price.data,
                 genre=listing_form.genre.data,
                 release_year=listing_form.release_year.data,
                 owner_id=current_user.id)
 
-    if request.method == 'POST':
-      f = listing_form.image.data
-      # f.save(os.path.join('/tmp/', secure_filename(f.filename)))
-      f.save(os.path.join('marketplace\\static\\listing_images', secure_filename(f.filename)))
 
+      # f.save(os.path.join('/tmp/', secure_filename(f.filename)))
+      # f.save(os.path.join('marketplace\\static\\listing_images', secure_filename(f.filename)))
+      
     # push to db
     db.session.add(listing)
     db.session.commit()
@@ -142,19 +171,35 @@ def edit(id):
   if (current_user.id == listing.owner_id):
     #check if listing is avail - stops from entering page from URL
     if (listing.available):
-      listing_form = ListingForm()
-      if listing_form.validate_on_submit():
-        listing.name=listing_form.name.data
-        listing.artist=listing_form.artist.data
-        listing.description=listing_form.description.data
-        listing.image=('/static/listing_images/' + listing_form.image.data.filename)
-        listing.price=listing_form.price.data
-        listing.genre=listing_form.genre.data
-        listing.owner_id=current_user.id
+      # Pre populate existing data with form init
+      edit_form = EditForm(
+        release_year=int(listing.release_year),
+        name=listing.name,
+        artist=listing.artist,
+        album=listing.album,
+        description=listing.description,
+        condition=listing.condition,
+        price=listing.price,
+        genre=listing.genre
+        )
 
-        if request.method == 'POST':
-          f = listing_form.image.data
-          f.save(os.path.join('marketplace\\static\\listing_images', secure_filename(f.filename)))
+      if edit_form.validate_on_submit():
+
+        listing.name=edit_form.name.data
+        listing.artist=edit_form.artist.data
+        listing.album=edit_form.album.data
+        listing.description=edit_form.description.data
+        listing.condition=edit_form.condition.data
+        listing.image=listing.image # image path from img upload function
+        listing.price=edit_form.price.data
+        listing.genre=edit_form.genre.data
+        # if image is unchanged as cannot add default value
+        if (edit_form.image.data is None):
+          listing.image=listing.image
+        else:
+          listing.image=edit_form.image.data
+        listing.release_year=edit_form.release_year.data
+        listing.owner_id=current_user.id
 
         # update db
         db.session.commit()
@@ -168,7 +213,7 @@ def edit(id):
   else:
     return redirect(url_for('listing.show', id=id))
 
-  return render_template('listings/create.html', form=listing_form, heading='Edit Listing')
+  return render_template('listings/create.html', form=edit_form, heading='Edit Listing')
 #-----/edit/id-----END
 
 #-----/delete/id-----

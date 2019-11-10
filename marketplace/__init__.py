@@ -10,6 +10,7 @@ from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_wtf import CsrfProtect
 from .util.filters import datetimeformat, excerpt
 from .config import SQLALCHEMY_DATABASE_URI
 db=SQLAlchemy()
@@ -20,14 +21,14 @@ def create_app():
 
     app=Flask(__name__)  # this is the name of the module/package that is calling this app
     app.debug=True
+    WTF_CSRF_ENABLED = True
     app.secret_key=os.urandom(32)
+
+    csrf = CsrfProtect()
+    csrf.init_app(app)
     #set the app configuration data
 
     app.config['SQLALCHEMY_DATABASE_URI']=SQLALCHEMY_DATABASE_URI
-
-    # uncomment for Heroku
-    # app.config['SQLALCHEMY_DATABASE_URI']= os.environ['DATABASE_URL']
-    # conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
     #initialize db with flask app
     db.init_app(app)

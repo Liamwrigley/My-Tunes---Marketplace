@@ -20,3 +20,5 @@ marketplace/marketplace.sqlite
 Cover page.pdf
 
 README.txt
+
+marketplace/config.py

@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import TextAreaField,SubmitField, StringField, PasswordField,FloatField, SelectField, IntegerField
-from wtforms.validators import InputRequired, Length, Email, EqualTo, DataRequired, Required
+from wtforms.validators import InputRequired, Length, Email, EqualTo, DataRequired, Required, Optional
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from werkzeug.utils import secure_filename
 from datetime import datetime
@@ -109,6 +109,31 @@ class ListingForm(FlaskForm):
     now = datetime.utcnow()
     self.release_year.choices = [(str(i), i) for i in range(now.year, now.year - 100, -1)]
     self.release_year.validators = [InputRequired()]
+
+
+#Edit form
+# Needed to make a new form for editing as images were required in listing 
+# creation and Optional validator was not working as intended.
+class EditForm(FlaskForm):
+  name = SanitizedString('Song', validators=[InputRequired(), Length(max=50)])
+  artist = SanitizedString('Artist Name', validators=[InputRequired(), Length(max=50)])
+  album = SanitizedString('Album Name', validators=[InputRequired(), Length(max=50)])
+  description = SanitizedTextArea('Description', 
+            validators=[InputRequired(), Length(max=200)])
+  condition = SanitizedTextArea('Item Condition',
+             validators=[InputRequired(), Length(max=50)])
+  image = FileField('Image - leaving blank will keep current image', validators=[
+    Optional(),
+    FileAllowed(['jpg','png'], "Image files only")])
+  price = PriceFloatField('Price', validators=[InputRequired()])
+  genre = SanitizedString('Genre', validators=[InputRequired(), Length(max=50)])
+  release_year = SelectField('Release Year')
+  submit = SubmitField("Update")
+
+  def __init__(self, *args, **kwargs):
+    super(EditForm, self).__init__(*args, **kwargs)
+    now = datetime.utcnow()
+    self.release_year.choices = [(str(i), i) for i in range(now.year, now.year - 100, -1)]
 
 #Login form
 class LoginForm(FlaskForm):

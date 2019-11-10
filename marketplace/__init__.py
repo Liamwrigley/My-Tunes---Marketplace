@@ -2,7 +2,7 @@ import os
 import datetime
 
 # uncomment for heroku
-# import psycopg2
+import psycopg2
 
 
 #import flask - from the package import class
@@ -11,7 +11,7 @@ from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from .util.filters import datetimeformat, excerpt
-
+from .config import SQLALCHEMY_DATABASE_URI
 db=SQLAlchemy()
 
 #create a function that creates a web application
@@ -20,10 +20,10 @@ def create_app():
 
     app=Flask(__name__)  # this is the name of the module/package that is calling this app
     app.debug=True
-    app.secret_key='supersecretkey'
+    app.secret_key=os.urandom(32)
     #set the app configuration data
 
-    app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///marketplace.sqlite'
+    app.config['SQLALCHEMY_DATABASE_URI']=SQLALCHEMY_DATABASE_URI
 
     # uncomment for Heroku
     # app.config['SQLALCHEMY_DATABASE_URI']= os.environ['DATABASE_URL']

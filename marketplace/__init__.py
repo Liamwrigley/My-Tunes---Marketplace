@@ -27,7 +27,7 @@ def create_app():
 
     app=Flask(__name__)  # this is the name of the module/package that is calling this app
     app.debug=DEBUG
-    WTF_CSRF_ENABLED = True
+    WTF_CSRF_ENABLED = False
     app.secret_key=os.urandom(32)
 
     csrf = CsrfProtect()

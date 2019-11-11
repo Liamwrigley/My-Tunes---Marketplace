@@ -81,11 +81,13 @@ def register():
 
 
 @bp.route('/logout', methods=['GET'])
-@login_required
 def logout():
     user = current_user
-    user.authenticated = False
-    db.session.add(user)
-    db.session.commit()
-    logout_user()
-    return redirect(url_for('main.home'))
+    if user is None:
+        return redirect(url_for('main.home'))
+    else:
+        user.authenticated = False
+        db.session.add(user)
+        db.session.commit()
+        logout_user()
+        return redirect(url_for('main.home'))

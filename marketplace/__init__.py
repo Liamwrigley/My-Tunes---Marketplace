@@ -15,9 +15,9 @@ from flask_wtf import CsrfProtect
 from .util.filters import datetimeformat, excerpt
 
 if (os.path.exists(os.getcwd() + '/marketplace/configs/local_config.py')):
-    from .configs.local_config import DATABASE_URL, DEBUG
+    from .configs.local_config import DATABASE_URL, DEBUG, WTF_CSRF_SECRET_KEY
 else:
-    from .configs.live_config import DATABASE_URL, DEBUG
+    from .configs.live_config import DATABASE_URL, DEBUG, WTF_CSRF_SECRET_KEY
 
 db=SQLAlchemy()
 
@@ -28,6 +28,7 @@ def create_app():
     app=Flask(__name__)  # this is the name of the module/package that is calling this app
     app.debug=DEBUG
     WTF_CSRF_ENABLED = True
+    app.WTF_CSRF_SECRET_KEY=WTF_CSRF_SECRET_KEY
     app.secret_key=os.urandom(32)
 
     csrf = CsrfProtect()

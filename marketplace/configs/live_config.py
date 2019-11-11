@@ -8,3 +8,4 @@ S3_KEY = os.environ['S3_KEY']
 S3_SECRET = os.environ['S3_SECRET']
 
 DEBUG=False
+WTF_CSRF_SECRET_KEY = os.environ['WTF_CSRF_SECRET_KEY']

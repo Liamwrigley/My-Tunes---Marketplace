@@ -56,7 +56,8 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(user_id):
-        return User.query.get(int(user_id))
+        # return User.query.get(id=user_id)
+        return User.query.filter_by(id=user_id).first()
 
     # Error handing - passes through error code and template forms based on code
     @app.errorhandler(Exception)

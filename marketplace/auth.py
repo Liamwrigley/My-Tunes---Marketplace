@@ -83,11 +83,11 @@ def register():
 @bp.route('/logout', methods=['GET'])
 def logout():
     user = current_user
-    if user is None:
-        return redirect(url_for('main.home'))
-    else:
+    try:
         user.authenticated = False
         db.session.add(user)
         db.session.commit()
         logout_user()
+        return redirect(url_for('main.home'))
+    except:
         return redirect(url_for('main.home'))

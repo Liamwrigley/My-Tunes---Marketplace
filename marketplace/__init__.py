@@ -29,7 +29,7 @@ def create_app():
     app.debug=DEBUG
     WTF_CSRF_ENABLED = True
     app.WTF_CSRF_SECRET_KEY=WTF_CSRF_SECRET_KEY
-    app.secret_key=os.urandom(32)
+    app.SECRET_KEY=os.urandom(32)
 
     csrf = CsrfProtect()
     csrf.init_app(app)

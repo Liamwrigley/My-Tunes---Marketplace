@@ -80,7 +80,7 @@ def register():
 
 
 
-@bp.route('/logout', methods=['GET'])
+@bp.route('/logout')
 def logout():
     user = current_user
     try:

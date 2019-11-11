@@ -1,9 +1,8 @@
 import os 
 
-S3_BUCKET = 'iab207'
-S3_LOCATION = 'http://{}.s3.amazonaws.com/'.format(S3_BUCKET)
-
 # Heroku
+S3_BUCKET = os.environ['S3_BUCKET']
+S3_LOCATION = os.environ['S3_LOCATION']
 DATABASE_URL= os.environ['DATABASE_URL']
 S3_KEY = os.environ['S3_KEY']
 S3_SECRET = os.environ['S3_SECRET']

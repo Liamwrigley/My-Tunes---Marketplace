@@ -10,7 +10,9 @@
         <h3 class="text-white display-2">Server related issue, <br>please try again later..</h3>
         {% else %}
         <h3 class="text-white display-2">There was a problem :(</h3>
-        <h5 class="text-white display-2">{{error}}</h5>
+          {% if error %}
+          <h5 class="text-white display-2">{{error}}</h5>
+          {% endif %}
         {% endif %}
     </div>
   </div>

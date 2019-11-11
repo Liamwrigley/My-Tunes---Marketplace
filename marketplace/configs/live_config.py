@@ -6,3 +6,5 @@ S3_LOCATION = os.environ['S3_LOCATION']
 DATABASE_URL= os.environ['DATABASE_URL']
 S3_KEY = os.environ['S3_KEY']
 S3_SECRET = os.environ['S3_SECRET']
+
+DEBUG=False

@@ -15,9 +15,9 @@ from flask_wtf import CsrfProtect
 from .util.filters import datetimeformat, excerpt
 
 if (os.path.exists(os.getcwd() + '/marketplace/configs/local_config.py')):
-    from .configs.local_config import DATABASE_URL
+    from .configs.local_config import DATABASE_URL, DEBUG
 else:
-    from .configs.live_config import DATABASE_URL
+    from .configs.live_config import DATABASE_URL, DEBUG
 
 db=SQLAlchemy()
 
@@ -26,7 +26,7 @@ db=SQLAlchemy()
 def create_app():
 
     app=Flask(__name__)  # this is the name of the module/package that is calling this app
-    app.debug=True
+    app.debug=DEBUG
     WTF_CSRF_ENABLED = True
     app.secret_key=os.urandom(32)
 
@@ -52,11 +52,11 @@ def create_app():
     #create a user loader function takes userid and returns User
     #from .models import User, Listing  # importing here to avoid circular references
     from .models import User, Listing
-    from flask_login import current_user
+    # from flask_login import current_user
 
     @login_manager.user_loader
     def load_user(user_id):
-       return User.query.get(int(user_id))
+        return User.query.get(int(user_id))
 
     # Error handing - passes through error code and template forms based on code
     @app.errorhandler(Exception)

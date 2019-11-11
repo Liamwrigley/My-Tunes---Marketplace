@@ -1,4 +1,4 @@
-import os
+import os, sys
 import os.path
 import datetime
 
@@ -19,6 +19,14 @@ if (os.path.exists(os.getcwd() + '/marketplace/configs/local_config.py')):
 else:
     from .configs.live_config import DATABASE_URL, DEBUG, WTF_CSRF_SECRET_KEY
 
+# Print to console the variables used
+print("\n------------\nEnvironment Variables\n", file=sys.stderr)
+print("DATABASE_URL {}".format(DATABASE_URL), file=sys.stderr)
+print("DEBUG {}".format(DEBUG), file=sys.stderr)
+print("WTF_CSRF_SECRET_KEY {}".format(WTF_CSRF_SECRET_KEY), file=sys.stderr)
+print("\n------------\n", file=sys.stderr)
+
+
 db=SQLAlchemy()
 
 #create a function that creates a web application
@@ -29,7 +37,7 @@ def create_app():
     app.debug=DEBUG
     WTF_CSRF_ENABLED = True
     app.WTF_CSRF_SECRET_KEY=WTF_CSRF_SECRET_KEY
-    app.SECRET_KEY=os.urandom(32)
+    app.secret_key=os.urandom(32)
 
     csrf = CsrfProtect()
     csrf.init_app(app)

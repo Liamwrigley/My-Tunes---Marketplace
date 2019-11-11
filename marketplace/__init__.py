@@ -7,11 +7,11 @@ import psycopg2
 
 
 #import flask - from the package import class
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from flask_wtf import CsrfProtect
+from flask_wtf import CsrfProtect, csrf
 from .util.filters import datetimeformat, excerpt
 
 if (os.path.exists(os.getcwd() + '/marketplace/configs/local_config.py')):
@@ -27,7 +27,7 @@ def create_app():
 
     app=Flask(__name__)  # this is the name of the module/package that is calling this app
     app.debug=DEBUG
-    WTF_CSRF_ENABLED = False
+    WTF_CSRF_ENABLED = True
     app.secret_key=os.urandom(32)
 
     csrf = CsrfProtect()

@@ -20,3 +20,6 @@ marketplace/marketplace.sqlite
 Cover page.pdf
 
 README.txt
+
+marketplace/configs/local_configs.py
+marketplace/configs/local_config.py

@@ -12,9 +12,26 @@ class User(db.Model, UserMixin):
 	#password is never stored in the DB, an encrypted password is stored
 	# the storage should be at least 255 chars long
     password_hash = db.Column(db.String(255), nullable=False)
+    authenticated = db.Column(db.Boolean, index=True, default=False, nullable=False)
 
     def __repr__(self): #string print method
         return "<ID: {}, Name: {}, EmailID: {}, pwhash: {}>".format(self.id, self.name, self.emailid, self.password_hash)
+
+    def is_active(self):
+        """True as all users are active"""
+        return True
+
+    def get_id(self):
+        """Return the user_ID tp satisfy Flask-Login's requirements"""
+        return self.id
+
+    def is_authenticated(self):
+        """Return True if the user is authenticated"""
+        return self.authenticated
+
+    def is_anonymous(self):
+        """Return False as anon users are not supported"""
+        return False
 
 
 class Listing(db.Model):

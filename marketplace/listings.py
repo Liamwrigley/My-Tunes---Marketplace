@@ -12,7 +12,10 @@ import app
 #create a blueprint
 bp = Blueprint('listing', __name__, url_prefix='/listing')
 
-from .config import S3_KEY, S3_SECRET, S3_BUCKET, S3_LOCATION
+if (os.path.exists(os.getcwd() + '/marketplace/configs/local_config.py')):
+  from .configs.local_config import S3_KEY, S3_SECRET, S3_BUCKET, S3_LOCATION
+else:
+  from .configs.live_config import S3_KEY, S3_SECRET, S3_BUCKET, S3_LOCATION
 
 s3 = boto3.client(
   "s3",

@@ -1,4 +1,5 @@
 import os
+import os.path
 import datetime
 
 # uncomment for heroku
@@ -12,7 +13,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_wtf import CsrfProtect
 from .util.filters import datetimeformat, excerpt
-from .config import DATABASE_URL
+
+if (os.path.exists(os.getcwd() + '/marketplace/configs/local_config.py')):
+    from .configs.local_config import DATABASE_URL
+else:
+    from .configs.live_config import DATABASE_URL
+
 db=SQLAlchemy()
 
 #create a function that creates a web application
@@ -47,6 +53,7 @@ def create_app():
     #from .models import User, Listing  # importing here to avoid circular references
     from .models import User, Listing
     from flask_login import current_user
+
     @login_manager.user_loader
     def load_user(user_id):
        return User.query.get(int(user_id))

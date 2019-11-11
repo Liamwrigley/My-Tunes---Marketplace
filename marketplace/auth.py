@@ -1,10 +1,10 @@
 from flask import (
-    Blueprint, flash, render_template, request, url_for, redirect
+    Blueprint, flash, render_template, escape, request, url_for, redirect, request
 )
 from werkzeug.security import generate_password_hash,check_password_hash
 from .models import User
 from .forms import LoginForm,RegisterForm
-from flask_login import login_user, login_required,logout_user
+from flask_login import login_user, login_required,logout_user, current_user
 from . import db
 
 
@@ -30,8 +30,14 @@ def login():
         elif not check_password_hash(user_check.password_hash, pw):
             error="Incorrect username or password"
         if error is None:
-            login_user(user_check)
-            return redirect(url_for('main.home'))
+            user_check.authenticated = True
+            db.session.add(user_check)
+            db.session.commit()
+            login_user(user_check, remember=True)
+
+            next = request.args.get('next')
+
+            return redirect(next or url_for('main.home'))
         else:
             flash(error, "danger")
     return render_template('user.html', form=login_form, heading='Login')
@@ -74,8 +80,12 @@ def register():
 
 
 
-@bp.route('/logout')
+@bp.route('/logout', methods=['GET'])
 @login_required
 def logout():
+    user = current_user
+    user.authenticated = False
+    db.session.add(user)
+    db.session.commit()
     logout_user()
     return redirect(url_for('main.home'))

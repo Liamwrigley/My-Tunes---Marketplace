@@ -11,7 +11,7 @@ from flask import Flask, render_template, session
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from flask_wtf import CsrfProtect, csrf
+from flask_wtf import CsrfProtect
 from .util.filters import datetimeformat, excerpt
 
 if (os.path.exists(os.getcwd() + '/marketplace/configs/local_config.py')):

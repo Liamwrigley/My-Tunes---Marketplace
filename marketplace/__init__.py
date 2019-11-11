@@ -62,7 +62,7 @@ def create_app():
     # Error handing - passes through error code and template forms based on code
     @app.errorhandler(Exception)
     def handle_error(e):
-        return render_template("error.html", error=e.code)
+        return render_template("error.html", error=e)
 
     @app.context_processor
     def get_genres():

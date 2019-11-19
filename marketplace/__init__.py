@@ -69,8 +69,7 @@ def create_app():
         user = User.query.filter_by(id=user_id).first()
         if user is None:
             return
-        curr_user = user
-        return curr_user
+        return user
 
     # Error handing - passes through error code and template forms based on code
     @app.errorhandler(Exception)

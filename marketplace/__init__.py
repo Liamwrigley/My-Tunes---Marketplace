@@ -64,9 +64,28 @@ def create_app():
     # from flask_login import current_user
 
     @login_manager.user_loader
-    def load_user(user_id):
+    def user_loader(user_id):
         # return User.query.get(id=user_id)
-        return User.query.filter_by(id=user_id).first()
+        user = User.query.filter_by(id=user_id).first()
+        if user is None:
+            return
+        curr_user.id = user_id
+        return curr_user
+
+    @login_manager.request_loader
+    def request_loader(request):
+        email = request.form.get('email')
+        if email not in users:
+            return
+
+        user = User()
+        user.id = email
+
+        # DO NOT ever store passwords in plaintext and always compare password
+        # hashes using constant-time comparison!
+        user.is_authenticated = request.form['password'] == users[email]['password']
+
+        return user
 
     # Error handing - passes through error code and template forms based on code
     @app.errorhandler(Exception)

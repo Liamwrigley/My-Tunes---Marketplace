@@ -34,14 +34,14 @@ Here we have a marketplace *My Tunes* for buying and selling music. Users can cr
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install all dependencies.
 
-Navigate to /IAB207-ASS.3 (containing *requirements.txt*) and run:
+Navigate to /Python-Marketplace---MyTunes (containing *requirements.txt*) and run:
 
 ```bash
 pip install -r requirements.txt
 ```
 
 ## Creating SQLite Database
-To initialise DB, navigate to /IAB207-ASS.3 (contaning *reinit.py*) and run:
+To initialise DB, navigate to /Python-Marketplace---MyTunes (contaning *reinit.py*) and run:
 ```bash
 python reinitby.py
 ```

@@ -30,7 +30,8 @@ Here we have a marketplace *My Tunes* for buying and selling music. Users can cr
 - CSS
 - Bootstrap 4
 
-## Installation
+## Local Installation
+*note* - No longer supported in current working version.
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install all dependencies.
 
@@ -41,12 +42,16 @@ pip install -r requirements.txt
 ```
 
 ## Creating SQLite Database
+*note* - No longer supported in current working version.
+
 To initialise DB, navigate to /Python-Marketplace---MyTunes (contaning *reinit.py*) and run:
 ```bash
 python reinitby.py
 ```
 
 ## Running Application
+*note* - No longer supported in current working version.
+
 Navigate to folder containing *app.py*
 ```bash
 flask run

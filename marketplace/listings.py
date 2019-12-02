@@ -25,6 +25,7 @@ s3 = boto3.client(
 
 @bp.route('/file_upload')
 def upload_file(file, bucket_name, acl="public-read"):
+  print("=============\nUploading Image\nfile: {}\nBucket: {}\n=============".format(file, bucket_name))
   try:
     s3.upload_fileobj(
       file,
@@ -39,6 +40,7 @@ def upload_file(file, bucket_name, acl="public-read"):
     print("Something happened: ", e)
     return e
 
+  print("{}{}".format(S3_LOCATION, file.filename))
   return "{}{}".format(S3_LOCATION, file.filename)
 
 

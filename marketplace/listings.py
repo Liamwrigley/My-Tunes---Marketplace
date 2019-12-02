@@ -183,20 +183,19 @@ def edit(id):
         )
 
       if edit_form.validate_on_submit():
-
         listing.name=edit_form.name.data
         listing.artist=edit_form.artist.data
         listing.album=edit_form.album.data
         listing.description=edit_form.description.data
         listing.condition=edit_form.condition.data
-        listing.image=listing.image # image path from img upload function
+        # listing.image=listing.image # image path from img upload function
         listing.price=edit_form.price.data
         listing.genre=edit_form.genre.data
         # if image is unchanged as cannot add default value
         if (edit_form.image.data is None):
           listing.image=listing.image
         else:
-          listing.image=edit_form.image.data
+          listing.image=upload_file(edit_form.image.data, S3_BUCKET)
         listing.release_year=edit_form.release_year.data
         listing.owner_id=current_user.id
 

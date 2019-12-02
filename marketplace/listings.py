@@ -146,10 +146,6 @@ def create():
                 genre=listing_form.genre.data,
                 release_year=listing_form.release_year.data,
                 owner_id=current_user.id)
-
-
-      # f.save(os.path.join('/tmp/', secure_filename(f.filename)))
-      # f.save(os.path.join('marketplace\\static\\listing_images', secure_filename(f.filename)))
       
     # push to db
     db.session.add(listing)

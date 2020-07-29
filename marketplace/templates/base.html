@@ -3,37 +3,31 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="description" content="Free For All">
+    <meta name="description" content="MyTunes">
     <!-- Bootstrap Required Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>MyTunes</title>
 
     <!-- SCRIPTS FOR STYLING -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
     </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
     <!-- Bootstrap CDN -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link rel="stylesheet" href="{{url_for('static', filename='styles/style.css')}}">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/94bed8af75.js"></script>
-</head>
-<!-- ---colour theming--- -->
-<!-- https://material-ui.com/customization/color/ -->
 
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favmusic.ico') }}">
+</head>
 <body>
     <!-- NAV -->
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
-            aria-controls="navbar-toggle" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar-toggle" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbar">
@@ -46,12 +40,13 @@
                     <a class="nav-link" href="#">Nav-Item</a>
                 </li> -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-                        aria-haspopup="true" aria-expanded="false">Genres</a>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Genres</a>
                     <div class="dropdown-menu">
-                        {% for genre in nav_genres %}
-                        <a class="dropdown-item" href="listings-full.html">{{genre.genre}}</a>
-                        {% endfor %}
+                        <form method="get" action="/listing/results">
+                            {% for genre in nav_genres %}
+                                <button name="genre" type=submit class="dropdown-item" value="{{genre.genre}}">{{genre.genre}}</a>
+                            {% endfor %}
+                        </form>
                     </div>
                 </li>
             </ul>
@@ -59,36 +54,36 @@
             <ul class="navbar-nav mr-2 mt-2 mt-lg-0">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-                        aria-haspopup="true" aria-expanded="false">Listings</a>
+                    aria-haspopup="true" aria-expanded="false">Listings</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ url_for('listing.my_listings') }}">Currently listed</a>
                         <a class="dropdown-item" href="{{ url_for('listing.create') }}">Create listing</a>
-                        <a class="dropdown-item" href="current-bids.html">Current bids</a>
+                        <a class="dropdown-item" href="{{ url_for('listing.my_listings') }}">Currently listed</a>
+                        <a class="dropdown-item" href="{{ url_for('listing.my_previous') }}">Previous listings</a>
                     </div>
                 </li>
             </ul>
             {% endif %}
             <ul class="navbar-nav mr-5 ml-2 mt-2 mt-lg-0">
                 <li class="nav-item dropdown">
+                    
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-                        aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i> Account</a>
+                        aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i>{% if current_user.is_authenticated %} {{current_user.name}}{% else %} Account{% endif %}</a>
+                    
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">My account</a>
                         {% if current_user.is_authenticated %}
                         <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Sign out</a>
                         {% else %}
                         <a class="dropdown-item" href="{{ url_for('auth.login') }}">Sign in</a>
-                        <a class="dropdown-item" href="{{ url_for('auth.register') }}">Register</a>
-                        {% endif %}
+                        <a class="dropdown-item" href="{{ url_for('auth.register') }}">Register</a> {% endif %}
                     </div>
                 </li>
             </ul>
         </div>
     </nav>
     <!-- NAV END -->
-
-    {% block content %}
-    {% endblock %}
+    <div style="min-height: calc(100vh - 128px);">
+        {% block content %} {% endblock %}
+    </div>
 
     <!-- FOOTER -->
     <footer class="footer bg-dark text-white">
@@ -105,9 +100,9 @@
                 window.history.back();
             }
             //enable tooltips
-            $(function () {
+            $(function() {
                 $('[data-toggle="tooltip"]').tooltip()
-            })        
+            })
         </script>
     </footer>
     <!-- FOOTER END -->

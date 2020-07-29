@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+  {% block content %}
+    <!-- VIEW LISTING AREA -->
+    <div class="container">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %} <!-- check if there are any messages -->
+            <div class="container">
+                <div class="row mt-3 mb-3">
+                    <div class="col-md-12">
+                    {% for category, message in messages %} <!--loop through the messages-->
+                        <div class="alert alert-{{ category }}">{{ message }}</div> <!--display as alert-->
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% endwith %}
+
+        <div class="card my-5 rounded-lg bg-light">
+            <div class="card-header">
+              <h1 class="my-2">Previously Listed</h1>
+            </div>
+          <div class="card-body pb-0">
+              <div class="row">
+                  <div class="col-md-4">
+                      <form class="form-inline my-2 my-lg-0" method="get" action="/listing/my_previous">
+                          <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search"
+                              aria-label="Search">
+                          <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+                      </form>
+                  </div>
+                  <div class="col-md-2 ml-auto">
+                      <a href="{{url_for('listing.create')}}" class="btn btn-block btn-primary">Create New</a>
+                  </div>
+              </div>
+          </div>
+          <div class="card-body">
+              <table class="table table-hover table-striped">
+                  <thead>
+                      <tr>
+                          <th scope="col">Item</th>
+                          <th scope="col">Buyer</th>
+                          <th scope="col">Price</th>
+                          <th scope="col">Sale Date</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in listing %}
+                      <tr>
+                          <th scope="row"><a href="{{url_for('listing.show', id=i.id)}}">{{i.name}}</a></th>
+                          <td>{{i.sales[0].buyer.name}}</td>
+                          <td>${{i.price}}</td>
+                          <td>{{i.sales[0].sale_date|datetimeformat}}</td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+      </div>
+    </div>
+    <!-- VIEW LISTING AREA END -->
+  {% endblock %}

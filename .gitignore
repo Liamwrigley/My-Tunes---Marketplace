@@ -10,3 +10,16 @@ marketplace/static/listing_images/
 .DS_Store
 
 venv
+
+.venv
+
+env
+
+marketplace/marketplace.sqlite
+
+Cover page.pdf
+
+README.txt
+
+marketplace/configs/local_configs.py
+marketplace/configs/local_config.py

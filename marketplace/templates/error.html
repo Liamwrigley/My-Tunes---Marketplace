@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="d-flex align-items-center justify-content-center h-100">
+    <div class="d-flex flex-column">
+        {% if error == 404 %}
+        <h3 class="text-white display-2">Sorry, that page may not exist anymore..</h3>
+        {% elif error == 500 %}
+        <h3 class="text-white display-2">Server related issue, <br>please try again later..</h3>
+        {% else %}
+        <h3 class="text-white display-2">There was a problem :(</h3>
+          {% if error %}
+          <p class="text-white display-5 mt-5"><b>{{error.code}}</b> - {{error.name}}</p>
+          <p class="text-white display-7">{{error.description}}</p>
+          {% endif %}
+        {% endif %}
+    </div>
+  </div>
+
+{% endblock %}

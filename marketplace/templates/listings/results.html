@@ -1,43 +1,74 @@
-{% extends 'base.html' %}          
+{% extends 'base.html' %} {% block content %}
 
-{% block content %}
-<div class="container">
-  <div>
-    <p>PLEASE ADD A SEARCH MODULE HERE THAT SITS ABOVE RESULTS</p>
-  </div>
-  <div id="home-listings" class="my-5 container">
-    {% if listing %}
-      {% for row in listing|batch(3) %}
-        <div class="row mb-5">
-        {% for item in row %}
-          <div class="col-lg">
-              <div class="card text-white bg-dark">
-                  <img src="{{item.image}}" class="img-fluid d-block w-100">
-                  <div class="card-body">
-                      <h5 class="card-title">{{item.name}}</h5>
-                      <p class="card-text">{{item.description}}</p>
-                  </div>
-                  <ul class="list-group list-group-flush">
-                      <li class="list-group-item text-white bg-dark"><i class="fas fa-portrait"></i> {{item.artist}}</li>
-                      <li class="list-group-item text-white bg-dark"><i class="fas fa-compact-disc"></i> {{item.genre}}</li>
-                      <li class="list-group-item text-white bg-dark"><i class="fas fa-calendar-alt"></i> {{item.created_at}}</li>
-                  </ul>
-                  <div class="card-body">
-                      <div class="row align-items-center">
-                          <div class="col-sm-6">
-                              <p class="card-text">${{item.price}}</p>
-                          </div>
-                          <div class="col-sm-6 text-right">
-                              <a href="{{ url_for('listing.show', id=item.id )}}" class="card-link btn btn-primary">View</a>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-        {% endfor %}
+<!-- RESULTS SEARCH AREA -->
+<div class="container mt-4 pt-4">
+    <form action="/listing/results">
+        <div class="form-row my-1 align-items-center">
+            <div class="col-md-2">
+                <select name="year" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                    <option value="" selected>Year</option>
+                    {% for year in nav_years %}
+                    <option value="{{year.release_year}}">{{year.release_year}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select name="genre" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                    <option value="" selected>Genre</option>
+                    {% for genre in nav_genres %}
+                        <option value="{{genre.genre}}">{{genre.genre}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <input name="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            </div>
         </div>
-      {% endfor %}
+    </form>
+</div>
+<!-- RESULTS SEARCH AREA END-->
+
+
+<div id="home-listings" class="my-5 container">
+    {% if listing %} {% for row in listing|batch(3) %}
+    <div class="row mb-5">
+        {% for item in row %}
+        <div class="col-lg">
+            <div class="card text-white bg-dark">
+                <img src="{{item.image}}" class="img-fluid d-block w-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{item.name}}</h5>
+                    <p class="card-text">{{item.condition|excerpt}}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item text-white bg-dark"><i class="fas fa-portrait"></i> {{item.artist}}</li>
+                    <li class="list-group-item text-white bg-dark"><i class="fas fa-compact-disc"></i> {{item.album}}</li>
+                    <li class="list-group-item text-white bg-dark"><i class="fas fa-calendar-alt"></i> {{item.release_year}}</li>
+                    <li class="list-group-item text-white bg-dark"><i class="fas fa-icons"></i> {{item.genre}}</li>
+                </ul>
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-sm-6">
+                            <p class="card-text">${{item.price}}</p>
+                        </div>
+                        <div class="col-sm-6 text-right">
+                            <a href="{{ url_for('listing.show', id=item.id )}}" class="card-link btn btn-primary">View</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="row mb-5">
+        <h2 class="px-3">Sorry, no listings match that criteria...</h2>
+    </div>
     {% endif %}
-  </div>
+</div>
 </div>
 {% endblock %}

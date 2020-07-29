@@ -2,20 +2,19 @@
 
 {% block content %}
 <!-- SEARCH AREA -->
-<div class="jumbotron jumbotron-fluid card card-image mb-4 hero-area" style="background: url('../img/hero-img.jpg');">
+<div class="jumbotron jumbotron-fluid card card-image mb-4 hero-area">
     <div class="container">
         <div class="row justify-content-center mt-5 pb-4">
             <div class="col-md-12">
-                <div class="jumbotron shadow py-4 mb-2 ">
-                    <form>
-                        <h1 class="text-center">Find your next tune</h1>
+                <div class="jumbotron transparent py-4 mb-2 ">
+                    <form method="get" action="/listing/results">
                         <div class="input-group">
                             <!-- <div class="input-group=append"> -->
-                            <input type="text" class="form-control" id="searchForm-input"
+                            <input type="search" name="search" class="form-control" id="searchForm-input"
                                 placeholder="Search by Keyword...">
                             <!-- </div> -->
                             <div class="input-group-append">
-                                <button type="submit" class="btn btn-outline-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
                     </form>
@@ -28,42 +27,47 @@
 
 
 <div class="container">
-{% if listing.featured %}
-<h2 class="mb-4 text-white">Popular</h2>
+{% if listing %}
+<h2 class="mb-4 text-white">New Sounds</h2>
 <!-- FEATURED CAROUSEL -->
 <div id="featured-carousel" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
-        {% for featured_items in listing.featured %}
-        <div class="card text-white bg-dark carousel-item active">
+        {% for listing in listing[0:3] %}
+            {% if loop.index == 1 %}
+                <div class="card text-white bg-dark carousel-item active">
+            {% else %}
+                <div class="card text-white bg-dark carousel-item">
+            {% endif %}
             <div class="row no-gutters">
                 <div class="col-md-8">
-                    <h3 class="featured-badge"><span class="badge badge-secondary">Featured</span></h3>
-                    <img src="{{listing.image}}" class="img-fluid d-block w-100" alt={{listing.name}}>
+                    <h3 class="featured-badge"><span class="badge badge-secondary">NEW</span></h3>
+                    <img src="{{listing.image}}" class="img-fluid d-block" alt={{listing.name}}>
                 </div>
                 <div class="col-md-4">
                     <div class="card-body">
                         <h5 class="card-title">{{listing.name}}</h5>
-                        <p class="card-text">{{listing.excerpt}}</p>
+                        <p class="card-text">{{listing.condition|excerpt}}</p>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item text-white bg-dark"><span><i class="fas fa-gamepad"></i>
-                                1-2</span></li>
-                        <li class="list-group-item text-white bg-dark">MA15+</li>
-                        <li class="list-group-item text-white bg-dark">{{listing.genre}}</li>
+                        <li class="list-group-item text-white bg-dark"><span><i class="fas fa-portrait"></i> {{listing.artist}}</span></li>
+                        <li class="list-group-item text-white bg-dark"><span><i class="fas fa-compact-disc"></i> {{listing.album}}</span></li>
+                        <li class="list-group-item text-white bg-dark"><span><i class="fas fa-calendar-alt"></i> {{listing.release_year}}</span></li>
+                        <li class="list-group-item text-white bg-dark"><i class="fas fa-icons"></i> {{listing.genre}}</li>
+                        <li class="list-group-item text-white bg-dark">{{listing.description|excerpt}}</li>
                     </ul>
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col-sm-6">
-                                <p class="card-text">{{listing.price}}</p>
+                                <p class="card-text">${{listing.price}}</p>
                             </div>
                             <div class="col-sm-6 text-right">
-                                <a href="{{ url_for('listing.show', id=item.id )}}" class="card-link btn btn-primary">View</a>
+                                <a href="{{ url_for('listing.show', id=listing.id )}}" class="card-link btn btn-primary">View</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
         {% endfor %}
     </div>
 </div>
@@ -75,32 +79,35 @@
     {% if listing %}
       {% for row in listing|batch(3) %}
         <div class="row mb-5">
-        {% for item in row %}
-          <div class="col-lg">
-              <div class="card text-white bg-dark">
-                  <img src="{{item.image}}" class="img-fluid d-block w-100">
-                  <div class="card-body">
-                      <h5 class="card-title">{{item.name}}</h5>
-                      <p class="card-text">{{item.description}}</p>
-                  </div>
-                  <ul class="list-group list-group-flush">
-                      <li class="list-group-item text-white bg-dark"><i class="fas fa-portrait"></i> {{item.artist}}</li>
-                      <li class="list-group-item text-white bg-dark"><i class="fas fa-compact-disc"></i> {{item.genre}}</li>
-                      <li class="list-group-item text-white bg-dark"><i class="fas fa-calendar-alt"></i> {{item.created_at}}</li>
-                  </ul>
-                  <div class="card-body">
-                      <div class="row align-items-center">
-                          <div class="col-sm-6">
-                              <p class="card-text">${{item.price}}</p>
-                          </div>
-                          <div class="col-sm-6 text-right">
-                              <a href="{{ url_for('listing.show', id=item.id )}}" class="card-link btn btn-primary">View</a>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-        {% endfor %}
+        {% if row|length == 3 %}
+            {% for item in row %}
+            <div class="col-lg">
+                <div class="card text-white bg-dark">
+                    <img src="{{item.image}}" class="img-fluid d-block w-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{item.name}}</h5>
+                        <p class="card-text">{{item.condition|excerpt}}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                            <li class="list-group-item text-white bg-dark"><i class="fas fa-portrait"></i> {{item.artist}}</li>
+                            <li class="list-group-item text-white bg-dark"><i class="fas fa-compact-disc"></i> {{item.album}}</li>
+                            <li class="list-group-item text-white bg-dark"><i class="fas fa-calendar-alt"></i> {{item.release_year}}</li>
+                            <li class="list-group-item text-white bg-dark"><i class="fas fa-icons"></i> {{item.genre}}</li>
+                    </ul>
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-sm-6">
+                                <p class="card-text">${{item.price}}</p>
+                            </div>
+                            <div class="col-sm-6 text-right">
+                                <a href="{{ url_for('listing.show', id=item.id )}}" class="card-link btn btn-primary">View</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
         </div>
       {% endfor %}
     {% endif %}

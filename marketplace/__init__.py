@@ -1,9 +1,31 @@
-import os
+import os, sys
+import os.path
+import datetime
+
+# uncomment for heroku
+import psycopg2
+
+
 #import flask - from the package import class
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_wtf import CsrfProtect
+from .util.filters import datetimeformat, excerpt
+
+if (os.path.exists(os.getcwd() + '/marketplace/configs/local_config.py')):
+    from .configs.local_config import DATABASE_URL, DEBUG, WTF_CSRF_SECRET_KEY
+else:
+    from .configs.live_config import DATABASE_URL, DEBUG, WTF_CSRF_SECRET_KEY
+
+# Print to console the variables used
+print("\n------------\nEnvironment Variables\n", file=sys.stderr)
+print("DATABASE_URL {}".format(DATABASE_URL), file=sys.stderr)
+print("DEBUG {}".format(DEBUG), file=sys.stderr)
+print("WTF_CSRF_SECRET_KEY {}".format(WTF_CSRF_SECRET_KEY), file=sys.stderr)
+print("\n------------\n", file=sys.stderr)
+
 
 db=SQLAlchemy()
 
@@ -12,10 +34,17 @@ db=SQLAlchemy()
 def create_app():
 
     app=Flask(__name__)  # this is the name of the module/package that is calling this app
-    app.debug=True
-    app.secret_key='supersecretkey'
+    app.debug=DEBUG
+    WTF_CSRF_ENABLED = True
+    app.WTF_CSRF_SECRET_KEY=WTF_CSRF_SECRET_KEY
+    app.secret_key=os.urandom(32)
+
+    csrf = CsrfProtect()
+    csrf.init_app(app)
     #set the app configuration data
-    app.config['SQLALCHEMY_DATABASE_URI']= os.environ['DATABASE_URL']
+
+    app.config['SQLALCHEMY_DATABASE_URI']=DATABASE_URL
+
     #initialize db with flask app
     db.init_app(app)
 
@@ -32,19 +61,26 @@ def create_app():
     #create a user loader function takes userid and returns User
     #from .models import User, Listing  # importing here to avoid circular references
     from .models import User, Listing
-    @login_manager.user_loader
-    def load_user(user_id):
-       return User.query.get(int(user_id))
+    # from flask_login import current_user
 
-    #Error handling 404
-    @app.errorhandler(404)
-    def not_found(e):
-        return render_template("404.html")
+    @login_manager.user_loader
+    def user_loader(user_id):
+        # return User.query.get(id=user_id)
+        user = User.query.filter_by(id=user_id).first()
+        if user is None:
+            return
+        return user
+
+    # Error handing - passes through error code and template forms based on code
+    @app.errorhandler(Exception)
+    def handle_error(e):
+        return render_template("error.html", error=e)
 
     @app.context_processor
     def get_genres():
-        genres = Listing.query.with_entities(Listing.genre).distinct()
-        return dict(nav_genres=genres)
+        genres = Listing.query.with_entities(Listing.genre).filter(Listing.available==True).order_by(Listing.genre.desc()).distinct()
+        years = Listing.query.with_entities(Listing.release_year).filter(Listing.available==True).order_by(Listing.release_year.desc()).distinct()
+        return dict(nav_genres=genres, nav_years=years)
 
     #importing views module here to avoid circular references
     # a commonly used practice.
@@ -56,5 +92,8 @@ def create_app():
 
     from .listings import bp
     app.register_blueprint(bp)
+
+    app.jinja_env.filters['datetimeformat'] = datetimeformat
+    app.jinja_env.filters['excerpt'] = excerpt
 
     return app

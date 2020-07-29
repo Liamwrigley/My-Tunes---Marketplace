@@ -4,40 +4,65 @@ IAB207 Rapid Web Development - Semester 2 - 2019 - QUT
 
 Create a functioning frontend and backend for a marketplace selling items of our choosings.
 
-### Technologies
- - Python
- - Flask
- - SQL
- - HTML
- - CSS
- - Bootstrap 4
+Here we have a marketplace *My Tunes* for buying and selling music. Users can create unique login details to start selling their items and buying from others on the marketplace.
 
-## Installation
+*My Tunes* does not integrate any form of payment - this is designed to be left up to the seller and buyer through either phone or email. The buyer can then select a user they wish the sell the item to and the item will be made no longer available to bid on.
+
+### Notable Features
+- All input fields are sanitized through the use of custom made flask_wtforms field classes
+- All passwords are hashed and stored as a hashkey in the database
+- Working search fields which are populated from the available data in the database
+ 
+### Enhancements / Todo
+- [x] Current images are stored in local static folder - will need to migrate to file host so that images can be saved and served on heroku deployment
+  - [ ] Would also like the be able to fomat the images on save - potentially using tinypng api
+- [ ] Create an admin dashboard to see all users and listings
+- [x] Create development and live environments for increased ease of heroku builds
+- [ ] Set up tests and use Travis CI for build checking before deployments
+- [ ] Add ability to set the desired bid price rather than it being set to the desired sell price
+- [ ] Setup whole project to be a boilerplate marketplace for future projects
+  
+### Technologies
+- Python
+- Flask
+- SQL
+- HTML
+- CSS
+- Bootstrap 4
+
+## Local Installation
+*note* - No longer supported in current working version.
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install all dependencies.
 
+Navigate to /Python-Marketplace---MyTunes (containing *requirements.txt*) and run:
+
 ```bash
-pip install flask
-pip install flask_bootstrap
-pip install flask_sqlalchemy
-pip install flask_login
-pip install flask_wtf
+pip install -r requirements.txt
+```
+
+## Creating SQLite Database
+*note* - No longer supported in current working version.
+
+To initialise DB, navigate to /Python-Marketplace---MyTunes (contaning *reinit.py*) and run:
+```bash
+python reinitby.py
 ```
 
 ## Running Application
-Setup sql DB with containing *.sql* file
+*note* - No longer supported in current working version.
 
 Navigate to folder containing *app.py*
-```python
+```bash
 flask run
 ```
 
 ## Collaborators
 This is a group QUT project collaborated on by 3 members:
 
- - [Jack Stanyon](https://github.com/stanyonja/)
- - [Liam Wrigley](https://github.com/liamwrigley/)
- - [Quoi McGowan](https://github.com/quoim)
+ - [Jack Stanyon](https://github.com/stanyonja/) - Styling fixes
+ - [Liam Wrigley](https://github.com/liamwrigley/) - Backend / DB / Design / Styling
+ - [Quoi McGowan](https://github.com/quoim) - Styling Fixes
 
 
 ## License
